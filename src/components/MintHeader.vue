@@ -9,12 +9,25 @@
         :default-active="activePath"
         router
         mode="horizontal"
-        text-color="#000"
-        active-text-color="#2A7EED"
+        text-color="#564e65"
+        active-text-color="#A27EC6"
       >
-        <el-menu-item index="/create">MINT</el-menu-item>
-        <el-menu-item index="/explore">EXPLORE</el-menu-item>
-        <el-menu-item index="/mynfts">MY NFTS</el-menu-item>
+        <el-menu-item
+          index="/create"
+          :class="activePath == '/create' ? 'active' : ''"
+          >MINT</el-menu-item
+        >
+        <el-menu-item
+          index="/explore"
+          :class="activePath == '/explore' ? 'active' : ''"
+          >EXPLORE</el-menu-item
+        >
+        <el-menu-item
+          index="/mynfts"
+          :class="activePath == '/mynfts' ? 'active' : ''"
+        >
+          MY NFTS</el-menu-item
+        >
       </el-menu>
       <div v-if="!isLogin" class="connect-wallet" @click="getConnect">
         Connect Wallet
@@ -151,7 +164,11 @@ export default {
   display: flex;
   align-items: center;
   .logo {
-    height: 50px;
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 120px;
   }
   .container {
     flex: 1;
@@ -165,17 +182,37 @@ export default {
       justify-content: flex-start;
       border: none;
       .el-menu-item {
-        height: 70px;
-        line-height: 70px;
+        position: relative;
+        height: 50px;
+        line-height: 50px;
         border: none;
-        margin: 0 35px;
-        color: #564e65 !important;
+        padding: 0 15px;
+        font-size: 16px;
+        text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+        // border-bottom: 2px solid transparent !important;
+      }
+      /deep/.el-menu-item.active::after {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        content: "";
+        display: block;
+        width: 20px;
+        height: 2px;
+        background-color: #a27ec6;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
       }
     }
     .connect-wallet {
-      border: 1px solid #484d72;
-      padding: 5px 10px;
-      font-size: 14px;
+      padding: 12px 16px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #e7e5e8;
+      box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5), 0px 2px 0px 0px #e7e5e8;
+      text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+
+      color: #564e65;
       cursor: pointer;
     }
   }

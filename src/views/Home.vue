@@ -1,152 +1,82 @@
 <template>
   <div id="Home">
-    <div class="banner">
-      <div class="container">
-        <el-row>
-          <el-col :md="12" class="left">
-            <div class="title-1">
-              NFTS
-              <br />
-              FOR EVERYONE
-            </div>
-            <div class="banner-bottom">
-              <div class="btn-box">
-                <span class="title-2">Your NFTs</span>
-                <span class="create-outline">
-                  <el-button plain class="create" @click="create">
-                    CREATE
-                  </el-button>
-                </span>
-              </div>
-              <div>
-                <img src="@/assets/images/home/mint.png" alt="" />
-              </div>
-            </div>
-          </el-col>
-          <el-col :md="12" class="right">
-            <img src="@/assets/images/home/hand.png" alt="" />
-          </el-col>
-        </el-row>
+    <div class="home-introduction">
+      <div class="introduction-left">
+        <h2 class="home-title">모두를 위한 간편한 NFT 서비스</h2>
+        <div class="home-discription">
+          저렴한 수수료로 다양한 네트워크에 NFT를 민팅, 저장하세요. MINTBOX는
+          빠르고 안전하며, 저렴하게 NFT를 민팅할 수 있습니다.
+        </div>
+        <div class="create-btn" @click="handleToCreate">
+          나만의 NFT 생성하기
+        </div>
       </div>
+      <img
+        class="introduction-img"
+        src="@/assets/images/home/hand.png"
+        alt=""
+      />
     </div>
-    <div class="create-nft container">
-      <el-row>
-        <el-col :md="14" class="left">
-          <img src="@/assets/images/home/create.png" alt="" />
-        </el-col>
-        <el-col :md="10" class="right">
-          <div class="banner-bottom">
-            <div class="title-2">Create your NFTs anytime anywhere</div>
-            <div>
-              <img src="@/assets/images/home/metadata.png" alt="" />
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
-    <div class="choose-type container">
-      <el-row>
-        <el-col>
-          <img class="banner-bg" :src="bannerBg" alt="" />
-        </el-col>
-      </el-row>
-      <el-row class="choose-type-box">
-        <el-col
-          :span="12"
-          :md="6"
-          v-for="(item, index) in chooseType"
-          :key="index"
-        >
-          <div
-            class="choose-type-item"
-            :class="chooseTypeIndex == index ? 'active' : ''"
+    <div class="home-content">
+      <div class="plate1">
+        <div class="plate1-content">
+          <img src="@/assets/images/home/little-logo.png" alt="" />
+          <h2>언제 어디서나 NFT를 만드세요</h2>
+          <p>
+            여러분의 NFT 데이터는 IPFS에 자동으로 업로드되어 안전하게
+            보관됩니다.
+          </p>
+        </div>
+        <img
+          class="plate1-img"
+          src="@/assets/images/home/item-banner.png"
+          alt=""
+        />
+      </div>
+      <div class="plate2">
+        <div class="plate2-content">
+          <el-menu
+            :default-active="activeIndex"
+            class="el-menu-demo"
+            text-color="#8E8798"
+            active-text-color="#A27EC6"
+            mode="horizontal"
+            @select="handleChooseItem"
           >
-            <img :src="item.img" alt="" />
-            <div class="text" @click="onChooseType(item, index)">
-              {{ item.text }}
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
-    <div class="main container">
-      <el-row>
-        <div>
-          <img class="main-bg" :src="mainBg" alt="" />
-          <div class="main-mask">
-            <p>Create your NFTs anytime anywhere</p>
-            <p style="font-size: 28px">Create NFTs</p>
-            <div class="main-btn-box">
-              <div
-                class="main-btn-item"
-                v-for="(item, index) in mainItem"
-                :key="index"
-                :class="mainItemIndex == index ? 'active' : ''"
-                @click="onChooseMain(item, index)"
-              >
-                <img :src="item.img" alt="" />
-                <span>{{ item.text }}</span>
-              </div>
-            </div>
-          </div>
+            <el-menu-item index="1">타입 선택</el-menu-item>
+            <el-menu-item index="2">타입 선택</el-menu-item>
+            <el-menu-item index="3">나만의 NFT</el-menu-item>
+            <el-menu-item index="4">탐색하기</el-menu-item>
+          </el-menu>
+          <img class="switch-img" :src="currentBgImg" alt="" />
         </div>
-      </el-row>
-    </div>
-    <div class="free container">
-      <div class="title">
-        <img src="@/assets/images/home/free.png" alt="" />
       </div>
-      <!-- <el-row>
-        <el-col class="ma" :md="8">
-          <div class="mask-box">
+      <div class="plate3">
+        <h2 class="plate3-title">NFT를 무료로 만들어보세요</h2>
+        <ul class="plate3-list">
+          <li class="plate3-item">
             <img src="@/assets/images/home/free1.png" alt="" />
-            <div class="mask"></div>
-          </div>
-        </el-col>
-        <el-col class="ma" :md="8">
-          <div class="mask-box">
+          </li>
+          <li class="plate3-item">
             <img src="@/assets/images/home/free2.png" alt="" />
-            <div class="mask"></div>
-          </div>
-        </el-col>
-        <el-col class="ma" :md="8">
-          <div class="mask-box">
+          </li>
+          <li class="plate3-item">
             <img src="@/assets/images/home/free3.png" alt="" />
-            <div class="mask"></div>
-          </div>
-        </el-col>
-      </el-row> -->
-      <el-carousel
-        :interval="4000"
-        type="card"
-        height="330px"
-        arrow="never"
-        indicator-position="none"
-      >
-        <el-carousel-item
-          class="ma"
-          v-for="(item, index) in freeItem"
-          :key="index"
-        >
-          <div class="mask-box">
-            <img :src="item" alt="" />
-            <div class="mask"></div>
-          </div>
-        </el-carousel-item>
-      </el-carousel>
-      <el-row>
-        <div class="title-2 text-center mt-50">Use MINTBOX description</div>
-        <img class="mt-50" src="@/assets/images/home/process.gif" alt="" />
-      </el-row>
-      <el-row>
-        <div class="title-2 text-center mt-50">Welcome Use MINTBOX</div>
-        <div class="title-3 text-center" style="margin-top: 30px">
-          Create, Storage and more details
-        </div>
-        <div class="text-center">
-          <el-button class="create mt-50" @click="create"> CREATE </el-button>
-        </div>
-      </el-row>
+          </li>
+        </ul>
+      </div>
+
+      <div class="plate4">
+        <h2 class="plate4-title">
+          MINTBOX 설명서를 확인하여 손쉽게 NFT를 민팅해보세요
+        </h2>
+        <img src="@/assets/images/home/process.gif" alt="" />
+      </div>
+      <div class="plate5">
+        <h2 class="plate5-title">MINTBOX에 오신 것을 환영합니다</h2>
+        <p class="plate5-text">더 쉽게 만들고 저장하고 민팅해보세요</p>
+        <div class="plate5-btn" @click="handleToCreate">지금 바로 생성하기</div>
+      </div>
     </div>
   </div>
 </template>
@@ -159,274 +89,211 @@ export default {
   components: {},
   data() {
     return {
-      chooseTypeIndex: 0,
-      mainItemIndex: 0,
-      bannerBg: require("@/assets/images/home/1.png"),
-      mainBg: require("@/assets/images/home/main_1.png"),
-      chooseType: [
-        {
-          bannerImg: require("@/assets/images/home/1.png"),
-          img: require("@/assets/images/home/type_icon1.png"),
-          text: "Choose type",
-        },
-        {
-          bannerImg: require("@/assets/images/home/2.png"),
-          img: require("@/assets/images/home/type_icon2.png"),
-          text: "Create NFTs",
-        },
-        {
-          bannerImg: require("@/assets/images/home/3.png"),
-          img: require("@/assets/images/home/type_icon3.png"),
-          text: "My NFTs",
-        },
-        {
-          bannerImg: require("@/assets/images/home/4.png"),
-          img: require("@/assets/images/home/type_icon4.png"),
-          text: "Explorer",
-        },
-      ],
+      activeIndex: "1",
+      currentBgImg: require("@/assets/images/home/main_1.png"),
       mainItem: [
-        {
-          bannerImg: require("@/assets/images/home/main_1.png"),
-          img: require("@/assets/images/home/icon_create.png"),
-          text: "Create",
-        },
-        {
-          bannerImg: require("@/assets/images/home/main_2.png"),
-          img: require("@/assets/images/home/icon_upload.png"),
-          text: "Upload",
-        },
-        {
-          bannerImg: require("@/assets/images/home/main_3.png"),
-          img: require("@/assets/images/home/icon_explorer.png"),
-          text: "Explorer",
-        },
-        {
-          bannerImg: require("@/assets/images/home/main_4.png"),
-          img: require("@/assets/images/home/icon_mint.png"),
-          text: "Mint",
-        },
-      ],
-      freeItem: [
-        require("@/assets/images/home/free2.png"),
-        require("@/assets/images/home/free3.png"),
-        require("@/assets/images/home/free1.png"),
+        require("@/assets/images/home/main_1.png"),
+        require("@/assets/images/home/main_2.png"),
+        require("@/assets/images/home/main_3.png"),
+        require("@/assets/images/home/main_4.png"),
       ],
     };
   },
   methods: {
-    create() {
+    handleToCreate() {
       this.$router.push(`/create`);
     },
-    onChooseType(item, index) {
-      this.chooseTypeIndex = index;
-      this.bannerBg = item.bannerImg;
-    },
-    onChooseMain(item, index) {
-      this.mainItemIndex = index;
-      this.mainBg = item.bannerImg;
+    handleChooseItem(item, index) {
+      this.currentBgImg = this.mainItem[item - 1];
     },
   },
 };
 </script>
 <style lang="less">
 #Home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-family: Arial Black, "Helvetica Neue", Helvetica, sans-serif;
   padding-bottom: 100px;
-  .title-2 {
-    font-size: 36px;
+  background: linear-gradient(180deg, #f1f6ff 0%, #fff1f2 100%);
+  .home-introduction {
+    width: 1120px;
+    height: 560px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     color: #564e65;
-    font-weight: bold;
-  }
-  .title-3 {
-    font-size: 18px;
-    color: #909397;
-    letter-spacing: 14px;
-    font-weight: bold;
-    font-family: Arial;
-  }
-  .create {
-    width: 150px;
-    height: 40px;
-    background-color: #a27ec6;
-    border: 1px solid #a27ec6;
-    color: #fff;
-  }
-  .mt-50 {
-    margin-top: 50px;
-  }
-  .banner {
-    width: 100%;
-    background-image: url("../assets/images/banner.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    max-height: 500px;
-    .title-1 {
-      font-size: 56px;
-      color: #564e65;
-      font-weight: bold;
-      margin-top: 80px;
-      margin-bottom: 45px;
+    .home-title {
+      width: 313px;
+      height: 116px;
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 58px;
     }
-
-    .create-outline {
+    .home-discription {
+      padding: 20px 0;
+      width: 410px;
+      height: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+    }
+    .create-btn {
       display: inline-block;
-      border: 1px solid #a27ec6;
-      padding: 5px;
+      padding: 12px 17px;
+      font-size: 16px;
+      line-height: 17px;
+      background: #ffffff;
+      box-shadow: 0px 2px 0px 0px #e7e5e8;
+      border-radius: 4px;
+      border: 1px solid #e7e5e8;
+      cursor: pointer;
     }
-
-    .banner-bottom {
-      background-color: #fff;
-      width: 100%;
-      max-width: 480px;
-      min-height: 220px;
-      padding: 0 20px;
-      padding-top: 20px;
-      box-sizing: border-box;
-      margin: 0 auto;
-      .btn-box {
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-around;
-        margin-bottom: 20px;
-      }
-      img {
-        width: 100%;
-        max-width: 440px;
-      }
-    }
-    .right {
+    .introduction-img {
       height: 100%;
-      img {
-        width: 100%;
-        height: 500px;
-      }
     }
   }
-  .create-nft {
-    margin-top: 115px;
-    .left {
-      img {
-        width: 100%;
-      }
-    }
-    .right {
-      padding-left: 50px;
-      padding-top: 50px;
-      img {
-        width: 100%;
-        margin-top: 20px;
-      }
-    }
-  }
-  .choose-type {
-    margin-top: 70px;
-    .banner-bg {
-      width: 100%;
-    }
-    .choose-type-box {
-      transform: translateY(-105px);
-    }
-    .choose-type-item {
-      width: 180px;
-      height: 180px;
 
-      border-radius: 5px;
-      text-align: center;
-      margin: 0 auto;
-      &.active {
-        background: linear-gradient(0deg, #ecf2ff, #fff1f2);
-        box-shadow: 0px 5px 15px 0px #ced9eb;
-        img {
-          visibility: unset;
+  .home-content {
+    width: 1120px;
+    padding: 80px;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 20px;
+
+    .plate1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 60px;
+      color: #564e65;
+      .plate1-content {
+        > h2 {
+          font-weight: 900;
+          font-size: 32px;
+          line-height: 46px;
+          margin: 0;
+          padding: 40px 0 10px;
+        }
+        > p {
+          font-size: 14px;
         }
       }
-      img {
-        height: 50px;
-        margin-top: 40px;
-        visibility: hidden;
-      }
-      .text {
-        font-size: 24px;
-        font-weight: bold;
-        color: #564e65;
-        margin-top: 35px;
-        cursor: pointer;
+      .plate1-img {
+        height: 200px;
       }
     }
-  }
-  .main {
-    margin-top: 50px;
-    position: relative;
-    overflow: hidden;
-    .main-bg {
-      width: 100%;
-      display: block;
-    }
-    .main-mask {
-      width: 38%;
-      height: 100%;
-      position: absolute;
-      left: 0;
-      top: 0;
-      background-image: url("../assets/images/home/main_mask.png");
-      background-size: cover;
-      p {
-        font-size: 34px;
-        color: #fff;
-        font-weight: bold;
-        padding-left: 30px;
-      }
-      .main-btn-box {
-        margin-top: 80px;
-        .main-btn-item {
+    .plate2 {
+      border-radius: 15px;
+      overflow: hidden;
+      .plate2-content {
+        width: 100%;
+        padding: 0 40px 40px;
+        box-sizing: border-box;
+        border: 20px solid;
+        border-image: linear-gradient(
+            180deg,
+            rgba(241, 246, 255, 1),
+            rgba(255, 241, 242, 1)
+          )
+          20 20;
+        .el-menu {
+          // width: 100%;
           display: flex;
-          align-items: center;
-          padding-left: 30%;
-          height: 96px;
-          cursor: pointer;
-          &.active {
-            background-color: #000;
-          }
+          justify-content: space-around;
+        }
+        .el-menu-item {
+          font-size: 16px;
+        }
+        .el-menu.el-menu--horizontal {
+          border-bottom: none;
+        }
+        .switch-img {
+          margin-top: 10px;
+          width: 100%;
+        }
+      }
+    }
+    .plate3 {
+      display: flex;
+      justify-content: space-between;
+      padding: 60px 0;
+      .plate3-title {
+        width: 200px;
+        height: 92px;
+        color: #564e65;
+        font-size: 32px;
+        font-weight: 900;
+        line-height: 46px;
+      }
+      .plate3-list {
+        list-style: none;
+        .plate3-item {
+          float: left;
+          width: 200px;
+          height: 200px;
+          border-radius: 10px;
+          overflow: hidden;
+          box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25),
+            0px 3px 10px 3px #e7e5e8;
           img {
-            width: 60px;
-            height: 60px;
-          }
-          span {
-            font-size: 18px;
-            color: #fff;
-            font-family: AaSpot;
-            margin-left: 25px;
+            width: 100%;
           }
         }
-      }
-    }
-  }
-  .free {
-    margin-top: 50px;
-    .ma {
-      padding: 5px;
-      img {
-        width: 330px;
-      }
-      .mask-box {
-        position: relative;
-        text-align: center;
-        &:hover {
-          .mask {
-            display: none;
-          }
+        .plate3-item + .plate3-item {
+          margin-left: 20px;
         }
       }
+      .plate3-list::after {
+        content: "";
+        display: block;
+        clear: both;
+      }
     }
-    img {
-      width: 100%;
+    .plate4 {
+      padding-bottom: 60px;
+      display: flex;
+      justify-content: space-between;
+      .plate4-title {
+        width: 209px;
+        height: 105px;
+        font-size: 24px;
+        font-weight: 900;
+        color: #564e65;
+        line-height: 35px;
+      }
+      > img {
+        width: 640px;
+      }
     }
-    .title {
+    .plate5 {
+      padding-top: 20px;
       text-align: center;
-      margin-bottom: 35px;
-      img {
-        max-width: 400px;
+      .plate5-title {
+        font-size: 32px;
+        color: #564e65;
+        font-weight: 900;
+        color: #564e65;
+        line-height: 46px;
+      }
+      .plate5-text {
+        margin: 19px 0 40px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #8e8798;
+        line-height: 20px;
+      }
+      .plate5-btn {
+        display: inline-block;
+        padding: 12px 17px;
+        color: #564e65;
+        line-height: 17px;
+        border: 1px solid #e7e5e8;
+        border-radius: 4px;
+        box-shadow: 0px 2px 0px 0px #e7e5e8;
+        cursor: pointer;
       }
     }
   }

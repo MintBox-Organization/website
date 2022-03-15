@@ -18,11 +18,6 @@ import MintHeader from "@/components/MintHeader.vue";
 import MintFooter from "@/components/MintFooter.vue";
 export default {
   name: "App",
-  data() {
-    return {
-      ab: 1,
-    };
-  },
   components: {
     MintHeader,
     MintFooter,
@@ -34,15 +29,14 @@ body {
   margin: 0;
   .el-header {
     text-align: center;
-    padding: 0 50px;
-    border-bottom: 1px solid #e6e6e6;
+    // padding: 0 50px;
+    // border-bottom: 1px solid #e6e6e6;
     position: fixed;
     top: 0;
     left: 0;
     background-color: #fff;
     width: 100%;
     z-index: 99;
-
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5),
       inset 0px -1px 0px 0px #e7e5e8;
   }
