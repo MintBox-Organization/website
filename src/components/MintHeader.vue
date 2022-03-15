@@ -3,43 +3,45 @@
     <router-link :to="`/`">
       <img class="logo" src="@/assets/images/logo.png" alt="" />
     </router-link>
-    <el-menu
-      class="el-menu-mint"
-      :default-active="activePath"
-      router
-      mode="horizontal"
-      text-color="#000"
-      active-text-color="#2A7EED"
-    >
-      <el-menu-item index="/create">MINT</el-menu-item>
-      <el-menu-item index="/explore">EXPLORE</el-menu-item>
-      <el-menu-item index="/mynfts">MY NFTS</el-menu-item>
-    </el-menu>
-    <div v-if="!isLogin" class="connect-wallet" @click="getConnect">
-      Connect Wallet
-    </div>
-    <div v-else class="connect-wallet">
-      <el-dropdown
-        trigger="click"
-        @command="
-          (command) => {
-            handleCommand(command);
-          }
-        "
+    <div class="container">
+      <el-menu
+        class="el-menu-mint"
+        :default-active="activePath"
+        router
+        mode="horizontal"
+        text-color="#000"
+        active-text-color="#2A7EED"
       >
-        <div>
-          {{ formatAccount }}
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <!-- <el-dropdown-item divided command="account">
+        <el-menu-item index="/create">MINT</el-menu-item>
+        <el-menu-item index="/explore">EXPLORE</el-menu-item>
+        <el-menu-item index="/mynfts">MY NFTS</el-menu-item>
+      </el-menu>
+      <div v-if="!isLogin" class="connect-wallet" @click="getConnect">
+        Connect Wallet
+      </div>
+      <div v-else class="connect-wallet">
+        <el-dropdown
+          trigger="click"
+          @command="
+            (command) => {
+              handleCommand(command);
+            }
+          "
+        >
+          <div>
+            {{ formatAccount }}
+          </div>
+          <el-dropdown-menu slot="dropdown">
+            <!-- <el-dropdown-item divided command="account">
             <i class="el-icon-user"></i> Account</el-dropdown-item
           > -->
-          <el-dropdown-item command="logout">
-            <i class="el-icon-download rotate-right"></i>
-            Logout</el-dropdown-item
-          >
-        </el-dropdown-menu>
-      </el-dropdown>
+            <el-dropdown-item command="logout">
+              <i class="el-icon-download rotate-right"></i>
+              Logout</el-dropdown-item
+            >
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
     </div>
   </div>
 </template>
@@ -151,21 +153,31 @@ export default {
   .logo {
     height: 50px;
   }
-  .el-menu-mint {
-    border: none;
-    margin: auto;
-    .el-menu-item {
-      height: 89px;
-      line-height: 89px;
+  .container {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    align-items: center;
+    // padding: 0 333px 0;
+    .el-menu-mint {
+      display: flex;
+      justify-content: flex-start;
       border: none;
-      margin: 0 35px;
+      .el-menu-item {
+        height: 70px;
+        line-height: 70px;
+        border: none;
+        margin: 0 35px;
+        color: #564e65 !important;
+      }
     }
-  }
-  .connect-wallet {
-    border: 1px solid #484d72;
-    padding: 5px 10px;
-    font-size: 14px;
-    cursor: pointer;
+    .connect-wallet {
+      border: 1px solid #484d72;
+      padding: 5px 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
   }
 }
 .rotate-right {

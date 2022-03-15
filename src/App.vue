@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <el-container>
-      <el-header height="90px">
+      <el-header style="height: 80px">
         <mint-header />
       </el-header>
       <el-main>
@@ -18,6 +18,11 @@ import MintHeader from "@/components/MintHeader.vue";
 import MintFooter from "@/components/MintFooter.vue";
 export default {
   name: "App",
+  data() {
+    return {
+      ab: 1,
+    };
+  },
   components: {
     MintHeader,
     MintFooter,
@@ -37,11 +42,14 @@ body {
     background-color: #fff;
     width: 100%;
     z-index: 99;
+
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5),
+      inset 0px -1px 0px 0px #e7e5e8;
   }
   .el-main {
-    min-height: calc(100vh - 90px - 120px);
+    min-height: calc(100vh - 80px - 120px);
     padding: 0;
-    padding-top: 90px;
+    padding-top: 80px;
   }
   .el-footer {
     text-align: center;
