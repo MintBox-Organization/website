@@ -2,13 +2,12 @@
   <div id="Home">
     <div class="home-introduction">
       <div class="introduction-left">
-        <h2 class="home-title">모두를 위한 간편한 NFT 서비스</h2>
+        <h2 class="home-title">{{ $t("home.title") }}</h2>
         <div class="home-discription">
-          저렴한 수수료로 다양한 네트워크에 NFT를 민팅, 저장하세요. MINTBOX는
-          빠르고 안전하며, 저렴하게 NFT를 민팅할 수 있습니다.
+          {{ $t("home.description") }}
         </div>
         <div class="create-btn" @click="handleToCreate">
-          나만의 NFT 생성하기
+          {{ $t("home.createBtn") }}
         </div>
       </div>
       <img
@@ -21,10 +20,9 @@
       <div class="plate1">
         <div class="plate1-content">
           <img src="@/assets/images/home/little-logo.png" alt="" />
-          <h2>언제 어디서나 NFT를 만드세요</h2>
+          <h2>{{ $t("home.anywhere") }}</h2>
           <p>
-            여러분의 NFT 데이터는 IPFS에 자동으로 업로드되어 안전하게
-            보관됩니다.
+            {{ $t("home.anywhereDescription") }}
           </p>
         </div>
         <img
@@ -43,16 +41,16 @@
             mode="horizontal"
             @select="handleChooseItem"
           >
-            <el-menu-item index="1">타입 선택</el-menu-item>
-            <el-menu-item index="2">타입 선택</el-menu-item>
-            <el-menu-item index="3">나만의 NFT</el-menu-item>
-            <el-menu-item index="4">탐색하기</el-menu-item>
+            <el-menu-item index="1">{{ $t("home.chooseType") }}</el-menu-item>
+            <el-menu-item index="2">{{ $t("home.createNfts") }}</el-menu-item>
+            <el-menu-item index="3">{{ $t("home.myNfts") }}</el-menu-item>
+            <el-menu-item index="4">{{ $t("home.explorer") }}</el-menu-item>
           </el-menu>
           <img class="switch-img" :src="currentBgImg" alt="" />
         </div>
       </div>
       <div class="plate3">
-        <h2 class="plate3-title">NFT를 무료로 만들어보세요</h2>
+        <h2 class="plate3-title">{{ $t("home.createFree") }}</h2>
         <ul class="plate3-list">
           <li class="plate3-item">
             <img src="@/assets/images/home/free1.png" alt="" />
@@ -68,14 +66,16 @@
 
       <div class="plate4">
         <h2 class="plate4-title">
-          MINTBOX 설명서를 확인하여 손쉽게 NFT를 민팅해보세요
+          {{ $t("home.useMintBox") }}
         </h2>
         <img src="@/assets/images/home/process.gif" alt="" />
       </div>
       <div class="plate5">
-        <h2 class="plate5-title">MINTBOX에 오신 것을 환영합니다</h2>
-        <p class="plate5-text">더 쉽게 만들고 저장하고 민팅해보세요</p>
-        <div class="plate5-btn" @click="handleToCreate">지금 바로 생성하기</div>
+        <h2 class="plate5-title">{{ $t("home.welcome") }}</h2>
+        <p class="plate5-text">{{ $t("home.doIt") }}</p>
+        <div class="plate5-btn" @click="handleToCreate">
+          {{ $t("home.createBtnAgain") }}
+        </div>
       </div>
     </div>
   </div>
@@ -135,7 +135,6 @@ export default {
     .home-discription {
       padding: 20px 0;
       width: 410px;
-      height: 40px;
       font-size: 14px;
       font-weight: 500;
       line-height: 20px;

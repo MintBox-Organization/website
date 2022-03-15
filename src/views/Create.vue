@@ -1,7 +1,9 @@
 <template>
   <div id="Create" class="container">
     <el-row type="flex">
-      <el-col><div class="choose">Choose your type</div></el-col>
+      <el-col
+        ><div class="choose">{{ $t("create.chooseType") }}</div></el-col
+      >
     </el-row>
     <el-row>
       <el-col :lg="8" :md="8" v-for="(item, index) in nftList" :key="index">
@@ -26,28 +28,31 @@ import { getToken, connect } from "@/utils/auth";
 export default {
   name: "Create",
   data() {
-    return {
-      nftList: [
+    return {};
+  },
+  computed: {
+    nftList() {
+      return [
         {
           img: require("@/assets/images/create_0.png"),
-          name: "Single NFT(ERC 721)",
-          tips: "Support for issuing 1 NFT",
+          name: this.$t("create.singleNft"),
+          tips: this.$t("create.supportSingleNFT"),
           type: "721",
         },
         {
           img: require("@/assets/images/create_1.png"),
-          name: "Multiple NFTs(ERC 721)",
-          tips: "Support for issuing multiple types of NFTs",
+          name: this.$t("create.multipleNfts"),
+          tips: this.$t("create.supportMultipleNfts"),
           type: "m721",
         },
         {
           img: require("@/assets/images/create_2.png"),
-          name: "Single NFT(ERC 1155)",
-          tips: "Support for issuing multiple numbers of NFTs",
+          name: this.$t("create.SingleNftUp"),
+          tips: this.$t("create.supportMultipleNumberNft"),
           type: "1155",
         },
-      ],
-    };
+      ];
+    },
   },
   methods: {
     getCreate(type) {
