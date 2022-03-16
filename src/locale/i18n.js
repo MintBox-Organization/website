@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueI18n from "vue-i18n";
 Vue.use(VueI18n);
-let locale = localStorage.getItem("mint-box-lang");
+let locale = JSON.parse(localStorage.getItem("mint-box-lang"));
 if (!locale) {
   locale = "ko";
 }
