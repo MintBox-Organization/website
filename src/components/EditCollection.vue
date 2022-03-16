@@ -21,7 +21,7 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
           <div style="color: #999999; font-size: 14px">
-            We recommend an image of at least 300x300. Gifs work too.
+            {{ $t("upload.logoUploadTips") }}
           </div>
         </el-form-item>
 
@@ -71,7 +71,7 @@ export default {
     let checkSpace = (rule, value, callback) => {
       var fdStart = value.indexOf(" ");
       if (fdStart == 0) {
-        return callback(new Error("Cannot start with a space"));
+        return callback(new Error(this.$t("upload.checkSpaceRule")));
       } else {
         callback();
       }
@@ -90,23 +90,27 @@ export default {
         name: [
           {
             required: true,
-            message: "Please enter the Smart Contract address",
+            message: this.$t("upload.collectionFormRules.name[0]"),
             trigger: "blur",
           },
           {
             min: 1,
             max: 20,
-            message: "Please enter 1 to 20 characters",
+            message: this.$t("upload.collectionFormRules.name[1]"),
             trigger: "blur",
           },
           { validator: checkSpace, trigger: "blur" },
         ],
         symbol: [
-          { required: true, message: "Please enter a symbol", trigger: "blur" },
+          {
+            required: true,
+            message: this.$t("upload.collectionFormRules.symbol[0]"),
+            trigger: "blur",
+          },
           {
             min: 1,
             max: 20,
-            message: "Please enter 1 to 20 characters",
+            message: this.$t("upload.collectionFormRules.symbol[1]"),
             trigger: "blur",
           },
           { validator: checkSpace, trigger: "blur" },

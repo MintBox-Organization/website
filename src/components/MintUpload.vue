@@ -2,10 +2,9 @@
   <div class="upload-components">
     <div class="d-flex justify-sb" v-if="type != 'm721'">
       <div class="upload-box">
-        <div class="title">* Upload</div>
+        <div class="title">* {{ $t("upload.upload") }}</div>
         <div class="tips">
-          File types supported: JPG, JPEG, PNG, GIF, SVG, GLB, GLTF. Max size:
-          100MB
+          {{ $t("upload.fileSupported") }}
         </div>
         <el-upload
           class="upload-single"
@@ -18,13 +17,13 @@
           accept="image/*"
         >
           <i class="el-icon-upload"></i>
-          <div class="el-upload__text">
-            Drag the file here, or <em>click</em> upload
+          <div class="el-upload__text" v-html="$t('upload.drag')">
+            <!-- {{ $t("upload.drag") }} -->
           </div>
         </el-upload>
       </div>
       <div class="preview-box">
-        <div class="title">File Preview</div>
+        <div class="title">{{ $t("upload.filePreview") }}</div>
         <div class="preview-image">
           <img :src="previewImg" alt="" />
         </div>
@@ -32,10 +31,9 @@
     </div>
     <div class="d-flex justify-sb upload-multiple" v-else>
       <div class="upload-box">
-        <div class="title">* Upload</div>
+        <div class="title">* {{ $t("upload.upload") }}</div>
         <div class="tips">
-          File types supported: JPG, JPEG, PNG, GIF, SVG, GLB, GLTF. Max size:
-          100MB
+          {{ $t("upload.fileSupported") }}
         </div>
         <div class="multiple-box">
           <el-upload
@@ -65,17 +63,19 @@
               label-width="100px"
               class="demo-imgForm"
             >
-              <el-form-item label="Name" prop="name">
-                <div class="tips">The name of your NFT.</div>
+              <el-form-item :label="$t('upload.nameLabel')" prop="name">
+                <div class="tips">{{ $t("upload.nftNameTips") }}</div>
                 <el-input
                   v-model="imgForm.name"
                   placeholder="NFT Name"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="Description" prop="description">
+              <el-form-item
+                :label="$t('upload.descriptionLabel')"
+                prop="description"
+              >
                 <div class="tips">
-                  The description will display beneath the image on the NFT's
-                  detail page.
+                  {{ $t("upload.descriptionTips") }}
                 </div>
                 <el-input
                   type="textarea"
@@ -83,13 +83,13 @@
                   maxlength="10000"
                   show-word-limit
                   v-model="imgForm.description"
-                  placeholder="Provide a detailed description of your NFT."
+                  :placeholder="$t('upload.descriptionPlaceholder')"
                 ></el-input>
               </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-              <el-button class="btn" @click="setNftName('imgForm')"
-                >Submit</el-button
+              <el-button class="btn" @click="setNftName('imgForm')">
+                {{ $t("upload.submit") }}</el-button
               >
             </span>
           </el-dialog>

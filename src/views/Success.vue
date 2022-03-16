@@ -7,32 +7,30 @@
       <el-col :md="12" class="text-center">
         <div class="texi-box">
           <div class="tit-1">
-            Congratulations! You have successfully created NFT!
+            {{ $t("success.title") }}
           </div>
           <div class="text-1">
-            A Mint site was created automatically for you based on the 4EVERLAND
-            HOSTING site, which you can deploy it with a single click or save
-            the code locally for custom site deployment, domain name changes,
-            etc. The template site can also be used to allow users to claim NFT
-            directly.
+            {{ $t("success.description") }}
           </div>
           <div class="text-2">
-            <span class="tips">Contract address: </span>
+            <span class="tips"> {{ $t("success.contractAddress") }}: </span>
             <span class="addr">{{ addr }}</span>
             <i class="el-icon-document-copy copy-icon" @click="copy(addr)"></i>
           </div>
           <div class="text-2">
-            <span class="tips">Website: </span>
+            <span class="tips"> {{ $t("success.website") }}: </span>
             <span class="url">
               <a :href="url" target="_blank">{{ url }}</a>
             </span>
           </div>
           <div class="btn-box">
             <el-button @click="download"
-              >Download<i class="el-icon-download el-icon--right"></i
+              >{{ $t("success.download")
+              }}<i class="el-icon-download el-icon--right"></i
             ></el-button>
             <el-button class="btn-color" @click="deploy"
-              >Deploy<i class="el-icon-lightning el-icon--right"></i
+              >{{ $t("success.deploy")
+              }}<i class="el-icon-lightning el-icon--right"></i
             ></el-button>
           </div>
         </div>
@@ -66,7 +64,7 @@ export default {
       console.log(oInput.value);
       document.execCommand("Copy");
       this.$message({
-        message: "Copy success",
+        message: this.$t("nftDetail.copySuccess"),
         type: "success",
       });
       oInput.remove();

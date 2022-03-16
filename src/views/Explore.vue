@@ -1,11 +1,15 @@
 <template>
   <div id="Explore" class="container">
     <el-row type="flex">
-      <el-col><div class="choose">Explore Collections</div></el-col>
+      <el-col
+        ><div class="choose">
+          {{ $t("explore.exploreCollections") }}
+        </div></el-col
+      >
     </el-row>
     <div v-if="nftList.length == 0" class="empty">
       <img src="@/assets/images/empty.png" alt="" />
-      <p>No NFTs to display!</p>
+      <p>{{ $t("myNfts.noNfts") }}</p>
     </div>
     <el-row v-else style="overflow: auto">
       <el-col v-for="(item, index) in nftList" :key="index" :lg="12" :md="12">
@@ -30,31 +34,35 @@
             >
               <div class="countDown-item">
                 <span class="num">{{ item.days || "00" }}</span>
-                <span class="unit">Days</span>
+                <span class="unit">{{ $t("explore.days") }}</span>
               </div>
               <div class="countDown-item">
                 <span class="num">{{ item.hours || "00" }}</span>
-                <span class="unit">Hours</span>
+                <span class="unit">{{ $t("explore.hours") }}</span>
               </div>
               <div class="countDown-item">
                 <span class="num">{{ item.minutes || "00" }}</span>
-                <span class="unit">Minutes</span>
+                <span class="unit">{{ $t("explore.minutes") }}</span>
               </div>
               <div class="countDown-item">
                 <span class="num">{{ item.seconds || "00" }}</span>
-                <span class="unit">Seconds</span>
+                <span class="unit">{{ $t("explore.seconds") }}</span>
               </div>
             </div>
             <span
               v-else-if="item.explorerStatus == 0"
               class="explorer-status upcoming"
-              >Upcoming</span
+              >{{ $t("explore.upcoming") }}</span
             >
-            <span v-if="item.explorerStatus == 1" class="explorer-status going"
-              >Going</span
+            <span
+              v-if="item.explorerStatus == 1"
+              class="explorer-status going"
+              >{{ $t("explore.going") }}</span
             >
-            <span v-if="item.explorerStatus == 2" class="explorer-status ended"
-              >Ended</span
+            <span
+              v-if="item.explorerStatus == 2"
+              class="explorer-status ended"
+              >{{ $t("explore.ended") }}</span
             >
           </div>
           <div class="right-box">
@@ -65,7 +73,7 @@
               <div class="info-item">
                 <span>
                   <i class="el-icon-price-tag"></i>
-                  <span class="info-tit">Price</span>
+                  <span class="info-tit">{{ $t("explore.price") }}</span>
                 </span>
                 <span class="bold" v-if="item.price == '0'">Free</span>
                 <span class="bold" v-else>{{
@@ -75,14 +83,14 @@
               <div class="info-item">
                 <span>
                   <i class="el-icon-bangzhu"></i>
-                  <span class="info-tit">Total</span>
+                  <span class="info-tit">{{ $t("explore.total") }}</span>
                 </span>
                 <span class="bold">{{ item.total }}</span>
               </div>
               <div class="info-item">
                 <span>
                   <i class="el-icon-time"></i>
-                  <span class="info-tit">Date</span>
+                  <span class="info-tit">{{ $t("explore.date") }}</span>
                 </span>
                 <span class="bold">
                   {{ new Date(item.mintStartAt).format() }}

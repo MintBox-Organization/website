@@ -52,15 +52,16 @@
       <div class="plate3">
         <h2 class="plate3-title">{{ $t("home.createFree") }}</h2>
         <ul class="plate3-list">
-          <li class="plate3-item">
+          <!-- <li class="plate3-item">
             <img src="@/assets/images/home/free1.png" alt="" />
-          </li>
-          <li class="plate3-item">
-            <img src="@/assets/images/home/free2.png" alt="" />
-          </li>
-          <li class="plate3-item">
-            <img src="@/assets/images/home/free3.png" alt="" />
-          </li>
+            <span class="img-text">sds</span>
+          </li> -->
+          <template v-for="item in freeItems">
+            <li class="plate3-item" :key="item.text">
+              <img :src="item.img" alt="" />
+              <span class="img-text">{{ item.text }}</span>
+            </li>
+          </template>
         </ul>
       </div>
 
@@ -98,6 +99,24 @@ export default {
         require("@/assets/images/home/main_4.png"),
       ],
     };
+  },
+  computed: {
+    freeItems() {
+      return [
+        {
+          img: require("@/assets/images/home/free1.png"),
+          text: this.$t("home.freeItems[0]"),
+        },
+        {
+          img: require("@/assets/images/home/free2.png"),
+          text: this.$t("home.freeItems[1]"),
+        },
+        {
+          img: require("@/assets/images/home/free3.png"),
+          text: this.$t("home.freeItems[2]"),
+        },
+      ];
+    },
   },
   methods: {
     handleToCreate() {
@@ -161,11 +180,10 @@ export default {
     box-sizing: border-box;
     background: #fff;
     border-radius: 20px;
-
     .plate1 {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      // align-items: center;
       padding-bottom: 60px;
       color: #564e65;
       .plate1-content {
@@ -177,6 +195,7 @@ export default {
           padding: 40px 0 10px;
         }
         > p {
+          margin: 0;
           font-size: 14px;
         }
       }
@@ -230,15 +249,25 @@ export default {
       .plate3-list {
         list-style: none;
         .plate3-item {
+          position: relative;
           float: left;
           width: 200px;
           height: 200px;
           border-radius: 10px;
-          overflow: hidden;
-          box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25),
-            0px 3px 10px 3px #e7e5e8;
+          // box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25),
+          //   0px 3px 10px 3px #e7e5e8;
           img {
             width: 100%;
+          }
+          .img-text {
+            position: absolute;
+            left: 50%;
+            bottom: 25px;
+            transform: translateX(-50%);
+            font-size: 18px;
+            font-weight: normal;
+            color: #564e65;
+            line-height: 26px;
           }
         }
         .plate3-item + .plate3-item {

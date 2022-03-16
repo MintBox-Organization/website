@@ -6,10 +6,12 @@
     :element-loading-text="loadingText"
   >
     <p class="title">
-      Create
-      {{ ruleForm.type == "m721" ? "multipe NFTs" : "single NFT" }} (ERC{{
-        ruleForm.type == "1155" ? "1155" : "721"
-      }})
+      {{
+        ruleForm.type == "m721"
+          ? $t("upload.createMultipleNfts")
+          : $t("upload.createSingleNft")
+      }}
+      (ERC{{ ruleForm.type == "1155" ? "1155" : "721" }})
     </p>
     <el-form
       :model="ruleForm"
@@ -30,29 +32,31 @@
           @getFileName="getFileName"
           @deleteFile="deleteFile"
         />
-        <div style="margin-top: 50px">
-          You can enter the (IPFS hash) CID address directly or upload and share
+        <div style="margin-top: 50px" v-html="$t('upload.uploadMoreTips')">
+          <!-- You can enter the (IPFS hash) CID address directly or upload and share
           via
           <a href="https://bucket.4everland.org/">4EVERLAND BUCKET</a>
-          if the image is larger than 100MB.
+          if the image is larger than 100MB. -->
         </div>
-        <el-input v-model="uploadcId" placeholder="IPFS hash">
+        <el-input v-model="uploadcId" :placeholder="$t('upload.ipfsHash')">
           <el-button
             class="btn-color btn-search"
             slot="append"
             @click="sendUploadCidTime"
-            >Search and Pin</el-button
+            >{{ $t("upload.searchAndPinBtn") }}</el-button
           >
         </el-input>
       </el-form-item>
-      <el-form-item label="Name" prop="name">
-        <div class="tips">The name of your NFT.</div>
-        <el-input v-model="ruleForm.name" placeholder="NFT Name"></el-input>
+      <el-form-item :label="$t('upload.nameLabel')" prop="name">
+        <div class="tips">{{ $t("upload.nftNameTips") }}</div>
+        <el-input
+          v-model="ruleForm.name"
+          :placeholder="$t('upload.nftNamePlaceholder')"
+        ></el-input>
       </el-form-item>
-      <el-form-item label="Description" prop="description">
+      <el-form-item :label="$t('upload.descriptionLabel')" prop="description">
         <div class="tips">
-          The description will display beneath the image on the NFT's detail
-          page.
+          {{ $t("upload.descriptionTips") }}
         </div>
         <el-input
           type="textarea"
@@ -60,10 +64,10 @@
           maxlength="10000"
           show-word-limit
           v-model="ruleForm.description"
-          placeholder="Provide a detailed description of your NFT."
+          :placeholder="$t('upload.descriptionPlaceholder')"
         ></el-input>
       </el-form-item>
-      <el-form-item label="Price sale" prop="salesType">
+      <el-form-item :label="$t('upload.priceSale')" prop="salesType">
         <div class="d-flex">
           <div
             class="price-item"
@@ -78,17 +82,19 @@
         </div>
         <el-form-item v-if="ruleForm.salesType == 'FIXED'" prop="salesPrice">
           <div class="tips">
-            The description will display beneath the image on the NFT's detail
-            page.
+            {{ $t("upload.fixedPriceTips") }}
           </div>
           <div class="d-flex">
             <el-input
-              placeholder="Please enter a unit selling price"
+              placeholder='$t("upload.salesPriceRule")'
               v-model="ruleForm.salesPrice"
               class="input-with-select"
             >
             </el-input>
-            <el-select v-model="ruleForm.salesUnit" placeholder="Please select">
+            <el-select
+              v-model="ruleForm.salesUnit"
+              :placeholder="$t('upload.pleaseSelect')"
+            >
               <el-option
                 v-for="item in salesUnitOptions"
                 :key="item.symbol"
@@ -101,38 +107,38 @@
       </el-form-item>
       <el-form-item
         v-if="ruleForm.type == '1155'"
-        label="Number of editions"
+        :label="$t('upload.numberOfEditions')"
         prop="sub"
       >
-        <div class="tips">Set the number of your NFTs.</div>
+        <div class="tips">{{ $t("upload.setNumNfts") }}</div>
         <el-input
-          placeholder="Please enter the content"
+          :placeholder="$t('upload.contentPlaceholder')"
           v-model="ruleForm.sub"
           class="input-with-select"
         >
         </el-input>
       </el-form-item>
-      <el-form-item label="Mint Time" prop="mintStartAt">
+      <el-form-item :label="$t('upload.mintTime')" prop="mintStartAt">
         <div class="tips">
-          Set the start and end times for your NFT release.
+          {{ $t("upload.mintTimeTips") }}
         </div>
         <el-date-picker
           class="width-100 justify-sb"
           v-model="datetimerange"
           type="datetimerange"
           range-separator="-"
-          start-placeholder="Start time"
-          end-placeholder="End time"
+          :start-placeholder="$t('upload.startTimePlaceholder')"
+          :end-placeholder="$t('upload.endTimePlaceholder')"
           @change="datetimerangeChange"
           :picker-options="startPickerOptions"
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="Blockchain" prop="blockChain">
+      <el-form-item :label="$t('upload.blockchainLable')" prop="blockChain">
         <el-select
           class="d-block"
           v-model="ruleForm.blockChain"
-          placeholder="Please select"
+          :placeholder="$t('upload.pleaseSelect')"
           :disabled="lock"
           @change="blockChainChange"
         >
@@ -141,10 +147,13 @@
           <el-option label="Polygon" :value="80001"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="Create Collection" prop="collection">
+      <el-form-item
+        :label="$t('upload.createCollectionLable')"
+        prop="collection"
+      >
         <div class="create-btn" @click="showCreateCollection">
           <img src="@/assets/images/add.png" alt="" />
-          <div class="text">Create</div>
+          <div class="text">{{ $t("upload.createCollectionName") }}</div>
           <div class="type">
             ERC-{{ ruleForm.type == "1155" ? "1155" : "721" }}
           </div>
@@ -153,8 +162,7 @@
       <el-form-item>
         <div class="template-box">
           <span>
-            As the default state is on, please close the button in case you
-            don't want to generate a site template for Mint.
+            {{ $t("upload.generateTemplateTips") }}
           </span>
           <el-switch v-model="ruleForm.template"></el-switch>
         </div>
@@ -164,7 +172,7 @@
           class="btn-color"
           @click="submitForm('ruleForm')"
           :loading="createBtnDisabled"
-          >Create</el-button
+          >{{ $t("upload.create") }}</el-button
         >
       </el-form-item>
     </el-form>
@@ -189,30 +197,30 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
           <div style="color: #999999; font-size: 14px">
-            We recommend an image of at least 300x300. Gifs work too.
+            {{ $t("upload.logoUploadTips") }}
           </div>
         </el-form-item>
 
-        <el-form-item label="Name" prop="name">
+        <el-form-item :label="$t('upload.nameLabel')" prop="name">
           <el-input
             v-model="collectionForm.name"
-            placeholder="Enter Collection name"
+            :placeholder="$t('upload.collectionNamePlaceholder')"
           ></el-input>
         </el-form-item>
-        <el-form-item label="Symbol" prop="symbol">
+        <el-form-item :label="$t('upload.symbolLabel')" prop="symbol">
           <el-input
             v-model="collectionForm.symbol"
-            placeholder="Enter token symbol"
+            :placeholder="$t('upload.symbolPlaceholder')"
           ></el-input>
         </el-form-item>
-        <el-form-item label="Description" prop="description">
+        <el-form-item :label="$t('upload.descriptionLabel')" prop="description">
           <el-input
             type="textarea"
             :rows="5"
             maxlength="10000"
             show-word-limit
             v-model="collectionForm.description"
-            placeholder="Spread some words about your token collection"
+            :placeholder="$t('upload.collectionDescription')"
           ></el-input>
         </el-form-item>
       </el-form>
@@ -221,7 +229,7 @@
           class="btn"
           @click="createCollection('collectionForm')"
           :loading="createBtnDisabled"
-          >Create collection</el-button
+          >{{ $t("upload.editCollectionBtn") }}</el-button
         >
       </span>
     </el-dialog>
@@ -253,7 +261,7 @@ export default {
   data() {
     let checkSalesPrice = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error("Please enter a unit selling price"));
+        return callback(new Error(this.$t("upload.salesPriceRule")));
       }
       var reg = /^\d+(\.\d+)?$/;
       let accLength;
@@ -263,24 +271,24 @@ export default {
         accLength = value.split(".")[1].length;
       }
       if (!reg.test(value)) {
-        callback(new Error("Please enter a number"));
+        callback(new Error(this.$t("upload.checkSalesPriceRules[0]")));
       } else if (accLength > 8) {
-        callback(new Error("Please enter the amount within 8 decimal places"));
+        callback(new Error(this.$t("upload.checkSalesPriceRules[1]")));
       } else if (value <= 0) {
-        callback(new Error("Price cannot be 0"));
+        callback(new Error(this.$t("upload.checkSalesPriceRules[2]")));
       } else {
         callback();
       }
     };
     let checkSub = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error("Please enter a unit selling price"));
+        return callback(new Error(this.$t("upload.numberOfEditionsRules[0]")));
       }
       let reg = /(^[1-9]\d*$)/;
       if (value <= 0) {
-        return callback(new Error("Quantity cannot be 0"));
+        return callback(new Error(this.$t("upload.numberOfEditionsRules[1]")));
       } else if (!reg.test(value)) {
-        return callback(new Error("Quantity must be a positive integer"));
+        return callback(new Error(this.$t("upload.numberOfEditionsRules[2]")));
       } else {
         callback();
       }
@@ -288,7 +296,7 @@ export default {
     let checkSpace = (rule, value, callback) => {
       var fdStart = value.indexOf(" ");
       if (fdStart == 0) {
-        return callback(new Error("Cannot start with a space"));
+        return callback(new Error(this.$t("upload.checkSpaceRule")));
       } else {
         callback();
       }
@@ -297,7 +305,7 @@ export default {
       const chainId = this.$store.state.chainId;
       if (value != chainId) {
         const network = formatNetwork(value);
-        return callback(new Error(`Please select the ${network} network.`));
+        return callback(new Error(this.$t("upload.checkNetwork", { network })));
       } else {
         callback();
       }
@@ -305,9 +313,9 @@ export default {
     return {
       lock: false,
       fullscreenLoading: false,
-      loadingText: "Loading...",
-      transactionText: "The transaction is in progress, please wait patiently",
-      contractText: "The contract is in progress, please wait patiently",
+      loadingText: this.$t("upload.loading"),
+      transactionText: this.$t("upload.transactionText"),
+      contractText: this.$t("upload.contractText"),
       bucketData: null,
       collectionShow: false,
       uploadcId: "",
@@ -371,11 +379,15 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: "Please enter NFT name", trigger: "blur" },
+          {
+            required: true,
+            message: this.$t("upload.ruleNftName"),
+            trigger: "blur",
+          },
           {
             min: 1,
             max: 50,
-            message: "Please enter 1 to 50 characters",
+            message: this.$t("upload.charactersRule"),
             trigger: "blur",
           },
           { validator: checkSpace, trigger: "blur" },
@@ -384,14 +396,14 @@ export default {
         salesType: [
           {
             required: true,
-            message: "Please choose the price sale type",
+            message: this.$t("upload.salesTypeRule"),
             trigger: "blur",
           },
         ],
         salesPrice: [
           {
             required: true,
-            message: "Please enter a unit selling price",
+            message: this.$t("upload.salesPriceRule"),
             trigger: "blur",
           },
           { validator: checkSalesPrice, trigger: "blur" },
@@ -399,7 +411,7 @@ export default {
         sub: [
           {
             required: true,
-            message: "Please enter the amount",
+            message: this.$t("upload.ruleAmount"),
             trigger: "blur",
           },
           { validator: checkSub, trigger: "blur" },
@@ -407,14 +419,14 @@ export default {
         mintStartAt: [
           {
             required: true,
-            message: "Please choose the mint time",
+            message: this.$t("upload.ruleMintTime"),
             trigger: "blur",
           },
         ],
         blockChain: [
           {
             required: true,
-            message: "Please choose the blockchain",
+            message: this.$t("upload.blockchainRule"),
             trigger: "blur",
           },
           { validator: checkChainId, trigger: "blur" },
@@ -422,7 +434,7 @@ export default {
         collection: [
           {
             required: true,
-            message: "Please create collection",
+            message: this.$t("upload.collectionRule"),
             trigger: "blur",
           },
         ],
@@ -438,46 +450,66 @@ export default {
         name: [
           {
             required: true,
-            message: "Please enter the Smart Contract address",
+            message: this.$t("upload.collectionFormRules.name[0]"),
             trigger: "blur",
           },
           {
             min: 1,
             max: 20,
-            message: "Please enter 1 to 20 characters",
+            message: this.$t("upload.collectionFormRules.name[1]"),
             trigger: "blur",
           },
           { validator: checkSpace, trigger: "blur" },
         ],
         symbol: [
-          { required: true, message: "Please enter a symbol", trigger: "blur" },
+          {
+            required: true,
+            message: this.$t("upload.collectionFormRules.symbol[0]"),
+            trigger: "blur",
+          },
           {
             min: 1,
             max: 20,
-            message: "Please enter 1 to 20 characters",
+            message: this.$t("upload.collectionFormRules.symbol[1]"),
             trigger: "blur",
           },
           { validator: checkSpace, trigger: "blur" },
         ],
       },
-      priceType: [
-        {
-          img: require("@/assets/images/free.png"),
-          name: "Free",
-          type: "FREE",
-        },
-        {
-          img: require("@/assets/images/fixed.png"),
-          name: "Fixed price",
-          type: "FIXED",
-        },
-      ],
+      // priceType: [
+      //   {
+      //     img: require("@/assets/images/free.png"),
+      //     name: "Free",
+      //     type: "FREE",
+      //   },
+      //   {
+      //     img: require("@/assets/images/fixed.png"),
+      //     name: "Fixed price",
+      //     type: "FIXED",
+      //   },
+      // ],
       contractURI: "",
       successInfo: {},
       deployArray: [],
       createBtnDisabled: false,
       countTime: 0,
     };
+  },
+  computed: {
+    priceType() {
+      return [
+        {
+          img: require("@/assets/images/free.png"),
+          name: this.$t("upload.free"),
+          type: "FREE",
+        },
+        {
+          img: require("@/assets/images/fixed.png"),
+          name: this.$t("upload.fixedPrice"),
+          type: "FIXED",
+        },
+      ];
+    },
   },
   methods: {
     init(contractAddress) {
@@ -505,7 +537,7 @@ export default {
         console.log(e);
       }
       if (!CID.isCID(cid)) {
-        this.$message.error("Please enter the correct CID");
+        this.$message.error(this.$t("upload.correctCidRule"));
         return;
       }
       this.sendUploadCid();
@@ -539,7 +571,7 @@ export default {
             }, 1000);
           } else {
             this.fullscreenLoading = false;
-            this.$message.error("Timeout");
+            this.$message.error(this.$t("upload.timeoutTips"));
           }
         }
       });
@@ -803,7 +835,7 @@ export default {
       const startTime = this.datetimerange[0].getTime();
       const endTime = this.datetimerange[1].getTime();
       if (endTime - startTime < 24 * 60 * 60 * 1000) {
-        this.$message.error("Start and end time cannot be less than 1 day");
+        this.$message.error(this.$t("upload.timeduration"));
         this.datetimerange = [];
         return;
       }
@@ -814,7 +846,7 @@ export default {
       const chainId = this.$store.state.chainId;
       if (val != chainId) {
         const network = formatNetwork(val);
-        this.$message.error(`Please select the ${network} network.`);
+        this.$message.error(this.$t("upload.checkNetwork", { network }));
       }
       this.$refs["ruleForm"].validateField("blockChain");
     },

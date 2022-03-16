@@ -2,12 +2,12 @@
   <div id="MyNfts" class="container">
     <div v-if="nftList.length == 0" class="empty">
       <img src="@/assets/images/empty.png" alt="" />
-      <p>No NFTs to display!</p>
-      <p class="bold">
-        Let
-        <router-link to="/create">create</router-link>
-        one.
-      </p>
+      <p>{{ $t("myNfts.noNfts") }}</p>
+      <router-link
+        to="/create"
+        class="bold"
+        v-html="$t('myNfts.createNft')"
+      ></router-link>
     </div>
     <el-row v-else>
       <el-col :lg="8" :md="8" v-for="(item, index) in nftList" :key="index">
@@ -26,7 +26,7 @@
             </div>
           </div>
           <div class="nft-footer">
-            <span>{{ item.count }} items</span>
+            <span>{{ item.count }} {{ $t("myNfts.items") }}</span>
             <el-dropdown
               placement="bottom"
               trigger="click"
@@ -44,28 +44,31 @@
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="edit">
                   <i class="el-icon-edit-outline"></i>
-                  Edit
+                  {{ $t("myNfts.edit") }}
                 </el-dropdown-item>
                 <!-- <el-dropdown-item divided command="edit">
                   <i class="el-icon-user"></i>
                   Add item
                 </el-dropdown-item> -->
                 <el-dropdown-item divided command="copy">
-                  <i class="el-icon-document-copy"></i> Copy
-                  link</el-dropdown-item
+                  <i class="el-icon-document-copy"></i>
+                  {{ $t("myNfts.copyLink") }}</el-dropdown-item
                 >
                 <el-dropdown-item divided command="deploy">
-                  <i class="el-icon-lightning"></i> Deploy</el-dropdown-item
+                  <i class="el-icon-lightning"></i>
+                  {{ $t("myNfts.deploy") }}</el-dropdown-item
                 >
                 <el-dropdown-item divided command="download">
-                  <i class="el-icon-download"></i> Download</el-dropdown-item
+                  <i class="el-icon-download"></i>
+                  {{ $t("myNfts.download") }}</el-dropdown-item
                 >
                 <el-dropdown-item
                   divided
                   command="delete"
                   style="color: #f56c6c"
                 >
-                  <i class="el-icon-delete"></i> Delete</el-dropdown-item
+                  <i class="el-icon-delete"></i>
+                  {{ $t("myNfts.delete") }}</el-dropdown-item
                 >
               </el-dropdown-menu>
             </el-dropdown>
@@ -161,7 +164,7 @@ export default {
       console.log(oInput.value);
       document.execCommand("Copy");
       this.$message({
-        message: "Copy success",
+        message: this.$t("nftDetail.copySuccess"),
         type: "success",
       });
       oInput.remove();

@@ -65,8 +65,8 @@
             <i class="iconfont icon-diqiu change"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="ko">한국어</el-dropdown-item>
             <el-dropdown-item command="en">English</el-dropdown-item>
-            <el-dropdown-item command="ko">Korean</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -165,6 +165,7 @@ export default {
     handleLanguageCommand(val) {
       console.log(val);
       this.$i18n.locale = val;
+      localStorage.setItem("mint-box-lang", JSON.stringify(val));
     },
   },
 
@@ -207,8 +208,7 @@ export default {
         border: none;
         padding: 0 15px;
         font-size: 16px;
-        text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
-        // border-bottom: 2px solid transparent !important;
+        font-weight: bold;
       }
       /deep/.el-menu-item.active::after {
         position: absolute;
@@ -231,11 +231,10 @@ export default {
       margin-right: 20px;
       padding: 12px 16px;
       font-size: 16px;
+      font-weight: bold;
       border-radius: 4px;
       border: 1px solid #e7e5e8;
       box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5), 0px 2px 0px 0px #e7e5e8;
-      text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
-
       color: #564e65;
       cursor: pointer;
     }
