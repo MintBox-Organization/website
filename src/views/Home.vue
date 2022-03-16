@@ -136,7 +136,14 @@ export default {
   justify-content: center;
   font-family: Arial Black, "Helvetica Neue", Helvetica, sans-serif;
   padding-bottom: 100px;
-  background: linear-gradient(180deg, #f1f6ff 0%, #fff1f2 100%);
+  background: linear-gradient(
+    180deg,
+    #f1f6ff 0%,
+    #fff1f2 25%,
+    #f1f6ff 50%,
+    #fff1f2 90%,
+    #f1f6ff 100%
+  );
   .home-introduction {
     width: 1120px;
     height: 560px;
