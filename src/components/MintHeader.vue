@@ -183,11 +183,9 @@ export default {
 #mintNav {
   display: flex;
   align-items: center;
+  font-family: sans-serif;
+
   .logo {
-    z-index: 10;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     width: 120px;
   }
   .container {

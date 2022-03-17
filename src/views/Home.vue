@@ -4,7 +4,8 @@
       <div class="introduction-left">
         <h2 class="home-title">{{ $t("home.title") }}</h2>
         <div class="home-discription">
-          {{ $t("home.description") }}
+          <p class="no-class">{{ $t("home.description") }}</p>
+          <p class="no-class">{{ $t("home.descriptions") }}</p>
         </div>
         <div class="create-btn" @click="handleToCreate">
           {{ $t("home.createBtn") }}
@@ -49,13 +50,9 @@
           <img class="switch-img" :src="currentBgImg" alt="" />
         </div>
       </div>
-      <div class="plate3">
+      <!-- <div class="plate3">
         <h2 class="plate3-title">{{ $t("home.createFree") }}</h2>
         <ul class="plate3-list">
-          <!-- <li class="plate3-item">
-            <img src="@/assets/images/home/free1.png" alt="" />
-            <span class="img-text">sds</span>
-          </li> -->
           <template v-for="item in freeItems">
             <li class="plate3-item" :key="item.text">
               <img :src="item.img" alt="" />
@@ -63,7 +60,7 @@
             </li>
           </template>
         </ul>
-      </div>
+      </div> -->
 
       <div class="plate4">
         <h2 class="plate4-title">
@@ -164,6 +161,9 @@ export default {
       font-size: 14px;
       font-weight: 500;
       line-height: 20px;
+      .no-class {
+        margin: 0;
+      }
     }
     .create-btn {
       display: inline-block;
@@ -241,54 +241,54 @@ export default {
         }
       }
     }
-    .plate3 {
-      display: flex;
-      justify-content: space-between;
-      padding: 60px 0;
-      .plate3-title {
-        width: 200px;
-        height: 92px;
-        color: #564e65;
-        font-size: 32px;
-        font-weight: 900;
-        line-height: 46px;
-      }
-      .plate3-list {
-        list-style: none;
-        .plate3-item {
-          position: relative;
-          float: left;
-          width: 200px;
-          height: 200px;
-          border-radius: 10px;
-          // box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25),
-          //   0px 3px 10px 3px #e7e5e8;
-          img {
-            width: 100%;
-          }
-          .img-text {
-            position: absolute;
-            left: 50%;
-            bottom: 25px;
-            transform: translateX(-50%);
-            font-size: 18px;
-            font-weight: normal;
-            color: #564e65;
-            line-height: 26px;
-          }
-        }
-        .plate3-item + .plate3-item {
-          margin-left: 20px;
-        }
-      }
-      .plate3-list::after {
-        content: "";
-        display: block;
-        clear: both;
-      }
-    }
+    // .plate3 {
+    //   display: flex;
+    //   justify-content: space-between;
+    //   padding: 60px 0;
+    //   .plate3-title {
+    //     width: 200px;
+    //     height: 92px;
+    //     color: #564e65;
+    //     font-size: 32px;
+    //     font-weight: 900;
+    //     line-height: 46px;
+    //   }
+    //   .plate3-list {
+    //     list-style: none;
+    //     .plate3-item {
+    //       position: relative;
+    //       float: left;
+    //       width: 200px;
+    //       height: 200px;
+    //       border-radius: 10px;
+    //       // box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25),
+    //       //   0px 3px 10px 3px #e7e5e8;
+    //       img {
+    //         width: 100%;
+    //       }
+    //       .img-text {
+    //         position: absolute;
+    //         left: 50%;
+    //         bottom: 25px;
+    //         transform: translateX(-50%);
+    //         font-size: 18px;
+    //         font-weight: normal;
+    //         color: #564e65;
+    //         line-height: 26px;
+    //       }
+    //     }
+    //     .plate3-item + .plate3-item {
+    //       margin-left: 20px;
+    //     }
+    //   }
+    //   .plate3-list::after {
+    //     content: "";
+    //     display: block;
+    //     clear: both;
+    //   }
+    // }
     .plate4 {
-      padding-bottom: 60px;
+      padding: 60px 0;
       display: flex;
       justify-content: space-between;
       .plate4-title {
@@ -298,6 +298,7 @@ export default {
         font-weight: 900;
         color: #564e65;
         line-height: 35px;
+        word-break: keep-all;
       }
       > img {
         width: 640px;
