@@ -40,7 +40,7 @@ exports.defaultDeadline = defaultDeadline;
 var formatNetwork = function (chainId) {
   switch (chainId) {
     case 0x1:
-      return "Mainnet";
+      return "Ethereum";
     case 0x3:
       return "Ropsten";
     case 0x4:
@@ -53,6 +53,10 @@ var formatNetwork = function (chainId) {
       return "Mumbai";
     case 0x61:
       return "BSC-test";
+    case 137:
+      return "polygon";
+    case 56:
+      return "BSC";
     default:
       return "Unknown";
   }
