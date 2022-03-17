@@ -1,4 +1,4 @@
-# hello-world
+# website
 
 ## Project setup
 ```
