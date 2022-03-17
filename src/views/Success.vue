@@ -30,7 +30,7 @@
             ></el-button>
             <el-button class="btn-color" @click="deploy"
               >{{ $t("success.deploy")
-              }}<i class="el-icon-lightning el-icon--right"></i
+              }}<i class="el-icon-view el-icon--right"></i
             ></el-button>
           </div>
         </div>
@@ -52,8 +52,7 @@ export default {
       window.open("https://github.com/Mint-Box/mint-box-template");
     },
     deploy() {
-      let url = `https://hosting.4everland.org/#/new/clone-flow?s=https%3A%2F%2Fgithub.com%2FMint-Box%2Fmint-box-template&e=VUE_APP_CONTRACT_ADDR%3A${this.addr}`;
-      window.open(url);
+      this.$router.push(`/mynfts/${this.addr}`);
     },
     copy(data) {
       let url = data;

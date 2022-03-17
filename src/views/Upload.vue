@@ -86,7 +86,7 @@
           </div>
           <div class="d-flex">
             <el-input
-              placeholder='$t("upload.salesPriceRule")'
+              :placeholder="$t('upload.salesPriceRule')"
               v-model="ruleForm.salesPrice"
               class="input-with-select"
             >
