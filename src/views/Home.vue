@@ -1,78 +1,99 @@
 <template>
   <div id="Home">
-    <div class="home-introduction">
-      <div class="introduction-left">
-        <h2 class="home-title">{{ $t("home.title") }}</h2>
-        <div class="home-discription">
-          <p class="no-class">{{ $t("home.description") }}</p>
-          <p class="no-class">{{ $t("home.descriptions") }}</p>
-        </div>
-        <div class="create-btn" @click="handleToCreate">
-          {{ $t("home.createBtn") }}
-        </div>
-      </div>
-      <img
-        class="introduction-img"
-        src="@/assets/images/home/hand.png"
-        alt=""
-      />
-    </div>
-    <div class="home-content">
-      <div class="plate1">
-        <div class="plate1-content">
-          <img src="@/assets/images/home/little-logo.png" alt="" />
-          <h2>{{ $t("home.anywhere") }}</h2>
-          <p>
-            {{ $t("home.anywhereDescription") }}
-          </p>
-        </div>
-        <img
-          class="plate1-img"
-          src="@/assets/images/home/item-banner.png"
-          alt=""
-        />
-      </div>
-      <div class="plate2">
-        <div class="plate2-content">
-          <el-menu
-            :default-active="activeIndex"
-            class="el-menu-demo"
-            text-color="#8E8798"
-            active-text-color="#A27EC6"
-            mode="horizontal"
-            @select="handleChooseItem"
+    <div class="container home-container">
+      <el-row class="home-introduction">
+        <el-col
+          :xs="12"
+          :sm="12"
+          :md="12"
+          :lg="12"
+          class="home-introduction-left"
+          ><div class="introduction-left">
+            <h2 class="home-title">{{ $t("home.title") }}</h2>
+            <div class="home-discription">
+              <p class="no-class">{{ $t("home.description") }}</p>
+              <p class="no-class">{{ $t("home.descriptions") }}</p>
+            </div>
+            <div class="create-btn" @click="handleToCreate">
+              {{ $t("home.createBtn") }}
+            </div>
+          </div></el-col
+        >
+        <el-col
+          :xs="12"
+          :sm="12"
+          :md="12"
+          :lg="12"
+          class="home-introduction-right"
+          ><img
+            class="introduction-img"
+            src="@/assets/images/home/hand.png"
+            alt=""
+        /></el-col>
+      </el-row>
+      <div class="home-content">
+        <el-row class="plate1">
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12"
+            ><div class="plate1-content">
+              <img src="@/assets/images/home/little-logo.png" alt="" />
+              <h2>{{ $t("home.anywhere") }}</h2>
+              <p>
+                {{ $t("home.anywhereDescription") }}
+              </p>
+            </div></el-col
           >
-            <el-menu-item index="1">{{ $t("home.chooseType") }}</el-menu-item>
-            <el-menu-item index="2">{{ $t("home.createNfts") }}</el-menu-item>
-            <el-menu-item index="3">{{ $t("home.myNfts") }}</el-menu-item>
-            <el-menu-item index="4">{{ $t("home.explorer") }}</el-menu-item>
-          </el-menu>
-          <img class="switch-img" :src="currentBgImg" alt="" />
+          <el-col
+            :xs="24"
+            :sm="24"
+            :md="12"
+            :lg="12"
+            :xl="12"
+            style="display: flex; align-items: center"
+            ><img
+              class="plate1-img"
+              src="@/assets/images/home/item-banner.png"
+              alt=""
+          /></el-col>
+        </el-row>
+        <div class="plate2">
+          <div class="plate2-content">
+            <el-menu
+              :default-active="activeIndex"
+              class="el-menu-demo"
+              text-color="#8E8798"
+              active-text-color="#A27EC6"
+              mode="horizontal"
+              @select="handleChooseItem"
+            >
+              <el-menu-item class="el-menu-item" index="1">{{
+                $t("home.chooseType")
+              }}</el-menu-item>
+              <el-menu-item index="2">{{ $t("home.createNfts") }}</el-menu-item>
+              <el-menu-item index="3">{{ $t("home.myNfts") }}</el-menu-item>
+              <el-menu-item index="4">{{ $t("home.explorer") }}</el-menu-item>
+            </el-menu>
+            <img class="switch-img" :src="currentBgImg" alt="" />
+          </div>
         </div>
-      </div>
-      <!-- <div class="plate3">
-        <h2 class="plate3-title">{{ $t("home.createFree") }}</h2>
-        <ul class="plate3-list">
-          <template v-for="item in freeItems">
-            <li class="plate3-item" :key="item.text">
-              <img :src="item.img" alt="" />
-              <span class="img-text">{{ item.text }}</span>
-            </li>
-          </template>
-        </ul>
-      </div> -->
-
-      <div class="plate4">
-        <h2 class="plate4-title">
-          {{ $t("home.useMintBox") }}
-        </h2>
-        <img src="@/assets/images/home/process.gif" alt="" />
-      </div>
-      <div class="plate5">
-        <h2 class="plate5-title">{{ $t("home.welcome") }}</h2>
-        <p class="plate5-text">{{ $t("home.doIt") }}</p>
-        <div class="plate5-btn" @click="handleToCreate">
-          {{ $t("home.createBtnAgain") }}
+        <el-row class="plate4">
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12"
+            ><h2 class="plate4-title">
+              {{ $t("home.useMintBox") }}
+            </h2></el-col
+          >
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12"
+            ><img
+              class="plate4-img"
+              src="@/assets/images/home/process.gif"
+              alt=""
+          /></el-col>
+        </el-row>
+        <div class="plate5">
+          <h2 class="plate5-title">{{ $t("home.welcome") }}</h2>
+          <p class="plate5-text">{{ $t("home.doIt") }}</p>
+          <div class="plate5-btn" @click="handleToCreate">
+            {{ $t("home.createBtnAgain") }}
+          </div>
         </div>
       </div>
     </div>
@@ -126,6 +147,28 @@ export default {
 };
 </script>
 <style lang="less">
+@media (max-width: 765px) {
+  .home-content {
+    margin-top: 30px !important;
+    padding: 0 20px 20px !important;
+  }
+  .plate1-img {
+    margin-top: 20px !important;
+  }
+
+  .home-title {
+    margin: 0;
+  }
+  .el-menu-demo {
+    overflow: scroll;
+    flex-wrap: wrap;
+  }
+  .el-menu-item {
+    width: 50%;
+    text-align: center;
+    padding: 0 !important;
+  }
+}
 #Home {
   display: flex;
   flex-direction: column;
@@ -141,23 +184,32 @@ export default {
     #fff1f2 90%,
     #f1f6ff 100%
   );
+  .home-container {
+    width: 100%;
+  }
   .home-introduction {
-    width: 1120px;
-    height: 560px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    max-width: 1120px;
+    padding: 0 20px;
     color: #564e65;
+    .home-introduction-left {
+      z-index: 2;
+      position: relative;
+    }
+    .home-introduction-right {
+      z-index: 1;
+      position: relative;
+    }
     .home-title {
-      width: 313px;
-      height: 116px;
+      max-width: 313px;
       font-size: 40px;
       font-weight: 900;
       line-height: 58px;
     }
     .home-discription {
       padding: 20px 0;
-      width: 410px;
+      max-width: 410px;
       font-size: 14px;
       font-weight: 500;
       line-height: 20px;
@@ -177,20 +229,18 @@ export default {
       cursor: pointer;
     }
     .introduction-img {
-      height: 100%;
+      width: 100%;
+      vertical-align: middle;
     }
   }
 
   .home-content {
-    width: 1120px;
+    width: 100%;
     padding: 80px;
     box-sizing: border-box;
     background: #fff;
     border-radius: 20px;
     .plate1 {
-      display: flex;
-      justify-content: space-between;
-      // align-items: center;
       padding-bottom: 60px;
       color: #564e65;
       .plate1-content {
@@ -207,7 +257,7 @@ export default {
         }
       }
       .plate1-img {
-        height: 200px;
+        width: 100%;
       }
     }
     .plate2 {
@@ -241,56 +291,8 @@ export default {
         }
       }
     }
-    // .plate3 {
-    //   display: flex;
-    //   justify-content: space-between;
-    //   padding: 60px 0;
-    //   .plate3-title {
-    //     width: 200px;
-    //     height: 92px;
-    //     color: #564e65;
-    //     font-size: 32px;
-    //     font-weight: 900;
-    //     line-height: 46px;
-    //   }
-    //   .plate3-list {
-    //     list-style: none;
-    //     .plate3-item {
-    //       position: relative;
-    //       float: left;
-    //       width: 200px;
-    //       height: 200px;
-    //       border-radius: 10px;
-    //       // box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25),
-    //       //   0px 3px 10px 3px #e7e5e8;
-    //       img {
-    //         width: 100%;
-    //       }
-    //       .img-text {
-    //         position: absolute;
-    //         left: 50%;
-    //         bottom: 25px;
-    //         transform: translateX(-50%);
-    //         font-size: 18px;
-    //         font-weight: normal;
-    //         color: #564e65;
-    //         line-height: 26px;
-    //       }
-    //     }
-    //     .plate3-item + .plate3-item {
-    //       margin-left: 20px;
-    //     }
-    //   }
-    //   .plate3-list::after {
-    //     content: "";
-    //     display: block;
-    //     clear: both;
-    //   }
-    // }
     .plate4 {
       padding: 60px 0;
-      display: flex;
-      justify-content: space-between;
       .plate4-title {
         width: 209px;
         height: 105px;
@@ -300,8 +302,8 @@ export default {
         line-height: 35px;
         word-break: keep-all;
       }
-      > img {
-        width: 640px;
+      .plate4-img {
+        width: 100%;
       }
     }
     .plate5 {
