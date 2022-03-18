@@ -97,7 +97,7 @@
             >
               <el-option
                 v-for="item in salesUnitOptions"
-                :key="item.symbol"
+                :key="item.name"
                 :label="item.name"
                 :value="item.name"
               ></el-option>
@@ -142,9 +142,12 @@
           :disabled="lock"
           @change="blockChainChange"
         >
-          <el-option label="Ethereum" :value="4"></el-option>
-          <el-option label="BSC" :value="97"></el-option>
-          <el-option label="Polygon" :value="80001"></el-option>
+          <el-option
+            v-for="item in blockChainOptions"
+            :key="item.chainId"
+            :label="item.lable"
+            :value="item.chainId"
+          ></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
@@ -253,7 +256,92 @@ import contracts from "@/contracts";
 import { formatNetwork } from "@/utils";
 const CID = require("cids");
 const { S3 } = require("@aws-sdk/client-s3");
-
+const Block_ChainOptions = [
+  {
+    lable: "Ethereum",
+    chainId: 1,
+  },
+  {
+    lable: "BSC",
+    chainId: 56,
+  },
+  {
+    lable: "polygon",
+    chainId: 137,
+  },
+];
+const Test_BlockChainOptions = [
+  {
+    lable: "Rinkeby",
+    chainId: 4,
+  },
+  {
+    lable: "BSC-Test",
+    chainId: 97,
+  },
+  {
+    lable: "Mumbai(Polygon testnet)",
+    chainId: 80001,
+  },
+];
+const Test_symbolList = {
+  USDT: {
+    address: "0x2b10a378fa4C6B3cb8df4EAb64Fb269CBA08E188",
+    decimal: 1e6,
+  },
+  USDC: {
+    address: "0x3858561E92C4F44fa2e4fBC3Ef57ac02Bc2754eF",
+    decimal: 1e6,
+  },
+  DAI: {
+    address: "0x2d2C8ab3A4006823260F862FF042b8cFDBcCE0C7",
+    decimal: 1e18,
+  },
+};
+const symbolListObj = {
+  1: {
+    USDT: {
+      address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      decimal: 1e6,
+    },
+    USDC: {
+      address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      decimal: 1e6,
+    },
+    DAI: {
+      address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      decimal: 1e18,
+    },
+  },
+  56: {
+    USDT: {
+      address: "0x55d398326f99059fF775485246999027B3197955",
+      decimal: 1e18,
+    },
+    USDC: {
+      address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+      decimal: 1e18,
+    },
+    DAI: {
+      address: "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",
+      decimal: 1e18,
+    },
+  },
+  137: {
+    USDT: {
+      address: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+      decimal: 1e6,
+    },
+    USDC: {
+      address: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+      decimal: 1e6,
+    },
+    DAI: {
+      address: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+      decimal: 1e18,
+    },
+  },
+};
 let s3Client;
 export default {
   name: "Upload",
@@ -323,31 +411,22 @@ export default {
       salesUnitOptions: [
         {
           name: "USDT",
-          symbol: "0x2b10a378fa4C6B3cb8df4EAb64Fb269CBA08E188",
         },
         {
           name: "USDC",
-          symbol: "0x3858561E92C4F44fa2e4fBC3Ef57ac02Bc2754eF",
         },
         {
           name: "DAI",
-          symbol: "0x2d2C8ab3A4006823260F862FF042b8cFDBcCE0C7",
         },
       ],
-      symbolList: {
-        DAI: {
-          address: "0x2d2C8ab3A4006823260F862FF042b8cFDBcCE0C7",
-          decimal: 1e18,
-        },
-        USDC: {
-          address: "0x3858561E92C4F44fa2e4fBC3Ef57ac02Bc2754eF",
-          decimal: 1e6,
-        },
-        USDT: {
-          address: "0x2b10a378fa4C6B3cb8df4EAb64Fb269CBA08E188",
-          decimal: 1e6,
-        },
-      },
+      blockChainOptions:
+        process.env.NODE_ENV === "production"
+          ? Block_ChainOptions
+          : Test_BlockChainOptions,
+      symbolList:
+        process.env.NODE_ENV === "production"
+          ? symbolListObj[1]
+          : Test_symbolList,
       datetimerange: [],
       startPickerOptions: {
         disabledDate: (time) => {
@@ -371,7 +450,7 @@ export default {
         salesUnit: "USDT",
         mintStartAt: "",
         mintEndAt: "",
-        blockChain: 4,
+        blockChain: process.env.NODE_ENV === "production" ? 1 : 4,
         collection: null,
         template: true,
         sub: null,
@@ -843,6 +922,9 @@ export default {
       this.ruleForm.mintEndAt = endTime;
     },
     blockChainChange(val) {
+      if (process.env.NODE_ENV === "production") {
+        this.symbolList = symbolListObj[val];
+      }
       const chainId = this.$store.state.chainId;
       if (val != chainId) {
         const network = formatNetwork(val);
@@ -915,6 +997,10 @@ export default {
     },
     async deploySingle() {
       try {
+        console.log(
+          "contracts.ERC721SingleCollectionFactoryAddress",
+          contracts.ERC721SingleCollectionFactoryAddress
+        );
         this.loadingText = this.transactionText;
         this.fullscreenLoading = true;
         const owner = await contracts.signer.getAddress();
@@ -923,6 +1009,7 @@ export default {
             "deploy",
             this.deployArray
           );
+
         const tx = await contracts.signer.sendTransaction({
           from: owner,
           to: contracts.ERC721SingleCollectionFactoryAddress,
@@ -975,9 +1062,11 @@ export default {
       const uri = this.ruleForm.item[0].metadata;
       const creator = owner;
       const imp = contracts.ERC721SingleCollectionUpgradeableImp;
+      console.log("imp", imp, contracts.chainId);
       const admin = owner;
       const salt = Buffer.alloc(32, 0);
       const salesPrice = this.ruleForm.salesPrice;
+      console.log(this.symbolList);
       const decimal =
         this.symbolList[this.ruleForm.salesUnit].decimal.toString();
       const price = this.setPrice(salesPrice, decimal);

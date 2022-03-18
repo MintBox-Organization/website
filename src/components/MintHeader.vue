@@ -210,6 +210,7 @@ export default {
         try {
           const account = await contracts.signer.getAddress();
           const chainId = await contracts.signer.getChainId();
+          contracts.setChainID(chainId);
           this.$store.commit(UPDATE_ACCOUNT, account);
           this.$store.commit(UPDATE_CHAINID, chainId);
         } catch (e) {
@@ -233,6 +234,7 @@ export default {
         });
       });
       window.ethereum.on("chainChanged", (chainId) => {
+        contracts.setChainID(Number(chainId));
         this.$store.commit(UPDATE_CHAINID, chainId);
       });
     },
