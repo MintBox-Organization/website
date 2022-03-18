@@ -40,7 +40,7 @@ export default {
     createMultipleNfts: "복수 NFT 생성",
     upload: "업로드",
     fileSupported:
-      "지원되는 파일 형식: JPG, JPEG, PNG, GIF, SVG, GLB, GLTF최대 크기: 100MB",
+      "지원되는 파일 형식: JPG, JPEG, PNG, GIF, SVG최대 크기: 100MB",
     drag: `파일을 여기로 드래그하거나 이곳을 <em>클릭하세요</em>.`,
     uploadMoreTips:
       '이미지가 100MB보다 큰 경우, IPFS의 해시(hash)인 CID 주소를 직접 입력하거나 <a href="https://bucket.4everland.org/">4EVERLAND BUCKET</a>을 통해 업로드 및 공유할 수 있습니다.',
@@ -219,5 +219,6 @@ export default {
     website: "웹사이트",
     download: "다운로드",
     deploy: "자세히보기",
+    421: "23",
   },
 };

@@ -41,7 +41,7 @@ export default {
     createMultipleNfts: "Create multiple NFTs",
     upload: "Upload",
     fileSupported:
-      "File types supported: JPG, JPEG, PNG, GIF, SVG, GLB, GLTF, MP4, WEBM. Max size: 100MB",
+      "File types supported: JPG, JPEG, PNG, GIF, SVG. Max size: 100MB",
     drag: `Drag the file here, or <em>click</em>  upload`,
     uploadMoreTips: `You can enter the (IPFS hash) CID address directly or upload and share via <a href="https://bucket.4everland.org/">4EVERLAND BUCKET</a> if the image is larger than 100MB.`,
     ipfsHash: "IPFS hash",

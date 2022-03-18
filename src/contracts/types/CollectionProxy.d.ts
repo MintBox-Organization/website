@@ -11,9 +11,6 @@ import {
   PopulatedTransaction,
   BaseContract,
   ContractTransaction,
-  Overrides,
-  PayableOverrides,
-  CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
@@ -21,28 +18,7 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface CollectionProxyInterface extends ethers.utils.Interface {
-  functions: {
-    "changeAdmin(address)": FunctionFragment;
-    "upgradeTo(address)": FunctionFragment;
-    "upgradeToAndCall(address,bytes)": FunctionFragment;
-  };
-
-  encodeFunctionData(functionFragment: "changeAdmin", values: [string]): string;
-  encodeFunctionData(functionFragment: "upgradeTo", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "upgradeToAndCall",
-    values: [string, BytesLike]
-  ): string;
-
-  decodeFunctionResult(
-    functionFragment: "changeAdmin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "upgradeTo", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "upgradeToAndCall",
-    data: BytesLike
-  ): Result;
+  functions: {};
 
   events: {
     "AdminChanged(address,address)": EventFragment;
@@ -106,54 +82,9 @@ export class CollectionProxy extends BaseContract {
 
   interface: CollectionProxyInterface;
 
-  functions: {
-    changeAdmin(
-      newAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+  functions: {};
 
-    upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-  };
-
-  changeAdmin(
-    newAdmin: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  upgradeTo(
-    newImplementation: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  upgradeToAndCall(
-    newImplementation: string,
-    data: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  callStatic: {
-    changeAdmin(newAdmin: string, overrides?: CallOverrides): Promise<void>;
-
-    upgradeTo(
-      newImplementation: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
-  };
+  callStatic: {};
 
   filters: {
     "AdminChanged(address,address)"(
@@ -189,39 +120,7 @@ export class CollectionProxy extends BaseContract {
     ): TypedEventFilter<[string], { implementation: string }>;
   };
 
-  estimateGas: {
-    changeAdmin(
-      newAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+  estimateGas: {};
 
-    upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-  };
-
-  populateTransaction: {
-    changeAdmin(
-      newAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-  };
+  populateTransaction: {};
 }

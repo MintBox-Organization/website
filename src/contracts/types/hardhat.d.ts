@@ -77,10 +77,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165Upgradeable__factory>;
     getContractFactory(
-      name: "Ownable",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Ownable__factory>;
-    getContractFactory(
       name: "IBeacon",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IBeacon__factory>;
@@ -96,14 +92,6 @@ declare module "hardhat/types/runtime" {
       name: "Proxy",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Proxy__factory>;
-    getContractFactory(
-      name: "ProxyAdmin",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ProxyAdmin__factory>;
-    getContractFactory(
-      name: "TransparentUpgradeableProxy",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.TransparentUpgradeableProxy__factory>;
     getContractFactory(
       name: "IERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -169,9 +157,9 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ICollection__factory>;
     getContractFactory(
-      name: "IFactoryWrapper",
+      name: "MintBoxPool",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IFactoryWrapper__factory>;
+    ): Promise<Contracts.MintBoxPool__factory>;
 
     getContractAt(
       name: "OwnableUpgradeable",
@@ -254,11 +242,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165Upgradeable>;
     getContractAt(
-      name: "Ownable",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Ownable>;
-    getContractAt(
       name: "IBeacon",
       address: string,
       signer?: ethers.Signer
@@ -278,16 +261,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Proxy>;
-    getContractAt(
-      name: "ProxyAdmin",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ProxyAdmin>;
-    getContractAt(
-      name: "TransparentUpgradeableProxy",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.TransparentUpgradeableProxy>;
     getContractAt(
       name: "IERC20",
       address: string,
@@ -369,10 +342,10 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ICollection>;
     getContractAt(
-      name: "IFactoryWrapper",
+      name: "MintBoxPool",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.IFactoryWrapper>;
+    ): Promise<Contracts.MintBoxPool>;
 
     // default types
     getContractFactory(

@@ -17,13 +17,10 @@ export type { IERC721ReceiverUpgradeable } from "./IERC721ReceiverUpgradeable";
 export type { IERC721Upgradeable } from "./IERC721Upgradeable";
 export type { ERC165Upgradeable } from "./ERC165Upgradeable";
 export type { IERC165Upgradeable } from "./IERC165Upgradeable";
-export type { Ownable } from "./Ownable";
 export type { IBeacon } from "./IBeacon";
 export type { ERC1967Proxy } from "./ERC1967Proxy";
 export type { ERC1967Upgrade } from "./ERC1967Upgrade";
 export type { Proxy } from "./Proxy";
-export type { ProxyAdmin } from "./ProxyAdmin";
-export type { TransparentUpgradeableProxy } from "./TransparentUpgradeableProxy";
 export type { IERC20 } from "./IERC20";
 export type { CollectionWrapper } from "./CollectionWrapper";
 export type { ERC1155SingleBoxWrapper } from "./ERC1155SingleBoxWrapper";
@@ -40,7 +37,7 @@ export type { ERC1155SingleCollectionFactory } from "./ERC1155SingleCollectionFa
 export type { ERC721MultipleCollectionFactory } from "./ERC721MultipleCollectionFactory";
 export type { ERC721SingleCollectionFactory } from "./ERC721SingleCollectionFactory";
 export type { ICollection } from "./ICollection";
-export type { IFactoryWrapper } from "./IFactoryWrapper";
+export type { MintBoxPool } from "./MintBoxPool";
 
 export { OwnableUpgradeable__factory } from "./factories/OwnableUpgradeable__factory";
 export { ERC1155Upgradeable__factory } from "./factories/ERC1155Upgradeable__factory";
@@ -58,13 +55,10 @@ export { IERC721ReceiverUpgradeable__factory } from "./factories/IERC721Receiver
 export { IERC721Upgradeable__factory } from "./factories/IERC721Upgradeable__factory";
 export { ERC165Upgradeable__factory } from "./factories/ERC165Upgradeable__factory";
 export { IERC165Upgradeable__factory } from "./factories/IERC165Upgradeable__factory";
-export { Ownable__factory } from "./factories/Ownable__factory";
 export { IBeacon__factory } from "./factories/IBeacon__factory";
 export { ERC1967Proxy__factory } from "./factories/ERC1967Proxy__factory";
 export { ERC1967Upgrade__factory } from "./factories/ERC1967Upgrade__factory";
 export { Proxy__factory } from "./factories/Proxy__factory";
-export { ProxyAdmin__factory } from "./factories/ProxyAdmin__factory";
-export { TransparentUpgradeableProxy__factory } from "./factories/TransparentUpgradeableProxy__factory";
 export { IERC20__factory } from "./factories/IERC20__factory";
 export { CollectionWrapper__factory } from "./factories/CollectionWrapper__factory";
 export { ERC1155SingleBoxWrapper__factory } from "./factories/ERC1155SingleBoxWrapper__factory";
@@ -81,4 +75,4 @@ export { ERC1155SingleCollectionFactory__factory } from "./factories/ERC1155Sing
 export { ERC721MultipleCollectionFactory__factory } from "./factories/ERC721MultipleCollectionFactory__factory";
 export { ERC721SingleCollectionFactory__factory } from "./factories/ERC721SingleCollectionFactory__factory";
 export { ICollection__factory } from "./factories/ICollection__factory";
-export { IFactoryWrapper__factory } from "./factories/IFactoryWrapper__factory";
+export { MintBoxPool__factory } from "./factories/MintBoxPool__factory";

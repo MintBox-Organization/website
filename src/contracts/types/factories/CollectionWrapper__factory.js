@@ -269,6 +269,19 @@ var _abi = [
     },
     {
         inputs: [],
+        name: "pool",
+        outputs: [
+            {
+                internalType: "contract MintBoxPool",
+                name: "",
+                type: "address"
+            },
+        ],
+        stateMutability: "view",
+        type: "function"
+    },
+    {
+        inputs: [],
         name: "price",
         outputs: [
             {

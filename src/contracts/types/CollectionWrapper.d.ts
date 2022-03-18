@@ -30,6 +30,7 @@ interface CollectionWrapperInterface extends ethers.utils.Interface {
     "owner()": FunctionFragment;
     "param()": FunctionFragment;
     "payToken()": FunctionFragment;
+    "pool()": FunctionFragment;
     "price()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "setClose(uint64)": FunctionFragment;
@@ -55,6 +56,7 @@ interface CollectionWrapperInterface extends ethers.utils.Interface {
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(functionFragment: "param", values?: undefined): string;
   encodeFunctionData(functionFragment: "payToken", values?: undefined): string;
+  encodeFunctionData(functionFragment: "pool", values?: undefined): string;
   encodeFunctionData(functionFragment: "price", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -111,6 +113,7 @@ interface CollectionWrapperInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "param", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "payToken", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "pool", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -260,6 +263,8 @@ export class CollectionWrapper extends BaseContract {
 
     payToken(overrides?: CallOverrides): Promise<[string]>;
 
+    pool(overrides?: CallOverrides): Promise<[string]>;
+
     price(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     renounceOwnership(
@@ -343,6 +348,8 @@ export class CollectionWrapper extends BaseContract {
 
   payToken(overrides?: CallOverrides): Promise<string>;
 
+  pool(overrides?: CallOverrides): Promise<string>;
+
   price(overrides?: CallOverrides): Promise<BigNumber>;
 
   renounceOwnership(
@@ -422,6 +429,8 @@ export class CollectionWrapper extends BaseContract {
     >;
 
     payToken(overrides?: CallOverrides): Promise<string>;
+
+    pool(overrides?: CallOverrides): Promise<string>;
 
     price(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -579,6 +588,8 @@ export class CollectionWrapper extends BaseContract {
 
     payToken(overrides?: CallOverrides): Promise<BigNumber>;
 
+    pool(overrides?: CallOverrides): Promise<BigNumber>;
+
     price(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
@@ -652,6 +663,8 @@ export class CollectionWrapper extends BaseContract {
     param(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     payToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    pool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

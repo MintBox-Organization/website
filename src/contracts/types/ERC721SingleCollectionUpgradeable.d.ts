@@ -28,7 +28,7 @@ interface ERC721SingleCollectionUpgradeableInterface
     "burn(uint256)": FunctionFragment;
     "close()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
-    "initialize(address,string,string,string,address,(address,uint256,uint64,uint64,string))": FunctionFragment;
+    "initialize(address,string,string,string,address,address,(address,uint256,uint64,uint64,string))": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "isClosed()": FunctionFragment;
     "isLimited()": FunctionFragment;
@@ -41,6 +41,7 @@ interface ERC721SingleCollectionUpgradeableInterface
     "ownerOf(uint256)": FunctionFragment;
     "param()": FunctionFragment;
     "payToken()": FunctionFragment;
+    "pool()": FunctionFragment;
     "price()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
@@ -62,7 +63,6 @@ interface ERC721SingleCollectionUpgradeableInterface
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "valueOf(uint256)": FunctionFragment;
-    "withdraw(address,address,uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -83,6 +83,7 @@ interface ERC721SingleCollectionUpgradeableInterface
   encodeFunctionData(
     functionFragment: "initialize",
     values: [
+      string,
       string,
       string,
       string,
@@ -121,6 +122,7 @@ interface ERC721SingleCollectionUpgradeableInterface
   ): string;
   encodeFunctionData(functionFragment: "param", values?: undefined): string;
   encodeFunctionData(functionFragment: "payToken", values?: undefined): string;
+  encodeFunctionData(functionFragment: "pool", values?: undefined): string;
   encodeFunctionData(functionFragment: "price", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -201,10 +203,6 @@ interface ERC721SingleCollectionUpgradeableInterface
     functionFragment: "valueOf",
     values: [BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "withdraw",
-    values: [string, string, BigNumberish]
-  ): string;
 
   decodeFunctionResult(functionFragment: "addToken", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
@@ -234,6 +232,7 @@ interface ERC721SingleCollectionUpgradeableInterface
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "param", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "payToken", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "pool", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -288,7 +287,6 @@ interface ERC721SingleCollectionUpgradeableInterface
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "valueOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
     "AddToken(uint256,address,string)": EventFragment;
@@ -304,7 +302,6 @@ interface ERC721SingleCollectionUpgradeableInterface
     "SetPayToken(address)": EventFragment;
     "SetPrice(uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
-    "Withdrawal(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AddToken"): EventFragment;
@@ -320,7 +317,6 @@ interface ERC721SingleCollectionUpgradeableInterface
   getEvent(nameOrSignatureOrTopic: "SetPayToken"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetPrice"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Withdrawal"): EventFragment;
 }
 
 export type AddTokenEvent = TypedEvent<
@@ -399,14 +395,6 @@ export type TransferEvent = TypedEvent<
   [string, string, BigNumber] & { from: string; to: string; tokenId: BigNumber }
 >;
 
-export type WithdrawalEvent = TypedEvent<
-  [string, string, BigNumber] & {
-    payToken: string;
-    to: string;
-    amount: BigNumber;
-  }
->;
-
 export class ERC721SingleCollectionUpgradeable extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
@@ -483,6 +471,7 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
       symbol: string,
       uri: string,
       creator: string,
+      pool: string,
       param: {
         payToken: string;
         price: BigNumberish;
@@ -537,6 +526,8 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
     >;
 
     payToken(overrides?: CallOverrides): Promise<[string]>;
+
+    pool(overrides?: CallOverrides): Promise<[string]>;
 
     price(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -656,13 +647,6 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
-
-    withdraw(
-      payToken: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
   };
 
   addToken(
@@ -697,6 +681,7 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
     symbol: string,
     uri: string,
     creator: string,
+    pool: string,
     param: {
       payToken: string;
       price: BigNumberish;
@@ -748,6 +733,8 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
   >;
 
   payToken(overrides?: CallOverrides): Promise<string>;
+
+  pool(overrides?: CallOverrides): Promise<string>;
 
   price(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -862,13 +849,6 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
 
   valueOf(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-  withdraw(
-    payToken: string,
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   callStatic: {
     addToken(
       creator: string,
@@ -899,6 +879,7 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
       symbol: string,
       uri: string,
       creator: string,
+      pool: string,
       param: {
         payToken: string;
         price: BigNumberish;
@@ -950,6 +931,8 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
     >;
 
     payToken(overrides?: CallOverrides): Promise<string>;
+
+    pool(overrides?: CallOverrides): Promise<string>;
 
     price(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1052,13 +1035,6 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    withdraw(
-      payToken: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
   };
 
   filters: {
@@ -1277,24 +1253,6 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
       [string, string, BigNumber],
       { from: string; to: string; tokenId: BigNumber }
     >;
-
-    "Withdrawal(address,address,uint256)"(
-      payToken?: string | null,
-      to?: string | null,
-      amount?: null
-    ): TypedEventFilter<
-      [string, string, BigNumber],
-      { payToken: string; to: string; amount: BigNumber }
-    >;
-
-    Withdrawal(
-      payToken?: string | null,
-      to?: string | null,
-      amount?: null
-    ): TypedEventFilter<
-      [string, string, BigNumber],
-      { payToken: string; to: string; amount: BigNumber }
-    >;
   };
 
   estimateGas: {
@@ -1330,6 +1288,7 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
       symbol: string,
       uri: string,
       creator: string,
+      pool: string,
       param: {
         payToken: string;
         price: BigNumberish;
@@ -1374,6 +1333,8 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
     param(overrides?: CallOverrides): Promise<BigNumber>;
 
     payToken(overrides?: CallOverrides): Promise<BigNumber>;
+
+    pool(overrides?: CallOverrides): Promise<BigNumber>;
 
     price(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1483,13 +1444,6 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    withdraw(
-      payToken: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1528,6 +1482,7 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
       symbol: string,
       uri: string,
       creator: string,
+      pool: string,
       param: {
         payToken: string;
         price: BigNumberish;
@@ -1572,6 +1527,8 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
     param(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     payToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    pool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1683,13 +1640,6 @@ export class ERC721SingleCollectionUpgradeable extends BaseContract {
     valueOf(
       amount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    withdraw(
-      payToken: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

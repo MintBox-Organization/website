@@ -24,8 +24,14 @@
       </div>
       <div class="preview-box">
         <div class="title">{{ $t("upload.filePreview") }}</div>
-        <div class="preview-image">
-          <img :src="previewImg" alt="" />
+        <div class="preview-image" v-loading="isPreview">
+          <!-- <img :src="previewImg" :onerror="errorImg" alt="" /> -->
+
+          <el-image :src="previewImg" @load="loadImgSuccess">
+            <div slot="error">
+              <img :src="errorImg" alt="" />
+            </div>
+          </el-image>
         </div>
       </div>
     </div>
@@ -100,7 +106,13 @@
 </template>
 <script>
 export default {
-  props: ["type", "previewImg", "previewName"],
+  props: {
+    type: String,
+    previewImg: {
+      type: String,
+    },
+    previewName: Object,
+  },
   data() {
     let checkSpace = (rule, value, callback) => {
       let fdStart = value.indexOf(" ");
@@ -111,6 +123,8 @@ export default {
       }
     };
     return {
+      isPreview: false,
+      errorImg: require("@/assets/images/default.png"),
       fileList: [],
       dialogImageUrl: "",
       dialogVisible: false,
@@ -175,6 +189,16 @@ export default {
         }
       });
     },
+    handlePreviewLoading() {
+      this.isPreview = true;
+      setTimeout(() => {
+        this.isPreview = false;
+        this.$emit("update:previewImg", "");
+      }, 1000 * 60);
+    },
+    loadImgSuccess(e) {
+      this.isPreview = false;
+    },
   },
   created() {},
 };
@@ -238,7 +262,7 @@ export default {
       overflow: hidden;
       display: flex;
       align-items: center;
-      img {
+      .el-image {
         width: 100%;
       }
     }

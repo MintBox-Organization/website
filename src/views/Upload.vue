@@ -25,7 +25,7 @@
         <mint-upload
           ref="mintUpload"
           :type="ruleForm.type"
-          :previewImg="previewImg"
+          :previewImg.sync="previewImg"
           :previewName="previewName"
           @fileUpload="nftImgUpload"
           @setFileName="setFileName"
@@ -434,7 +434,7 @@ export default {
         },
       },
       previewName: { name: "", description: "" },
-      previewImg: "",
+      previewImg: require("@/assets/images/11.png"),
       logoPreviewImg: "",
       singleNftUrl: "",
       singleNftCid: "",
@@ -623,34 +623,40 @@ export default {
     },
     sendUploadCid() {
       this.fullscreenLoading = true;
+
       cidCheck(this.uploadcId).then((res) => {
-        if (res.data.list.length > 0) {
-          if (this.ruleForm.type != "m721") {
-            const imgUrl = "https://ipfs.io/ipfs/" + res.data.list[0].cid;
-            this.previewImg = imgUrl;
-            this.singleNftUrl = imgUrl;
-            this.singleNftCid = res.data.list[0].cid;
-            // this.singleNftCid = this.uploadcId;
-          } else {
-            const owner = this.$store.state.account;
-            const imgUrl = "https://ipfs.io/ipfs/" + res.data.list[0].cid;
-            let obj = {
-              creator: owner,
-              imgUrl: imgUrl,
-              cid: res.data.list[0].cid,
-            };
-            this.mutipleTokens.push(obj);
-          }
-          this.fullscreenLoading = false;
+        if (res.code == 412) {
+          this.$message.error(this.$t("upload.fileSupported"));
         } else {
-          if (this.countTime < 10) {
-            setTimeout(() => {
-              this.sendUploadCid();
-              this.countTime = this.countTime + 1;
-            }, 1000);
-          } else {
+          if (res.data.list.length > 0) {
+            if (this.ruleForm.type != "m721") {
+              const imgUrl = "https://ipfs.io/ipfs/" + res.data.list[0].cid;
+              this.previewImg = imgUrl;
+              this.singleNftUrl = imgUrl;
+              this.singleNftCid = res.data.list[0].cid;
+              // this.singleNftCid = this.uploadcId;
+              this.$refs.mintUpload.handlePreviewLoading();
+            } else {
+              const owner = this.$store.state.account;
+              const imgUrl = "https://ipfs.io/ipfs/" + res.data.list[0].cid;
+              let obj = {
+                creator: owner,
+                imgUrl: imgUrl,
+                cid: res.data.list[0].cid,
+              };
+              this.mutipleTokens.push(obj);
+            }
             this.fullscreenLoading = false;
-            this.$message.error(this.$t("upload.timeoutTips"));
+          } else {
+            if (this.countTime < 10) {
+              setTimeout(() => {
+                this.sendUploadCid();
+                this.countTime = this.countTime + 1;
+              }, 1000);
+            } else {
+              this.fullscreenLoading = false;
+              this.$message.error(this.$t("upload.timeoutTips"));
+            }
           }
         }
       });
@@ -1063,7 +1069,7 @@ export default {
       const creator = owner;
       const imp = contracts.ERC721SingleCollectionUpgradeableImp;
       console.log("imp", imp, contracts.chainId);
-      const admin = owner;
+      const pool = contracts.mintBoxPool;
       const salt = Buffer.alloc(32, 0);
       const salesPrice = this.ruleForm.salesPrice;
       console.log(this.symbolList);
@@ -1084,8 +1090,8 @@ export default {
         uri,
         creator,
         imp,
-        admin,
         salt,
+        pool,
         param,
       ];
       const deployment =
@@ -1096,8 +1102,8 @@ export default {
           uri,
           creator,
           imp,
-          admin,
           salt,
+          pool,
           param
         );
       this.collectionForm.contractAddress = deployment;
@@ -1165,7 +1171,7 @@ export default {
       const symbol = this.collectionForm.symbol;
       const root = this.ruleForm.rootHash;
       const imp = contracts.ERC721MultiCollectionUpgradeableImp;
-      const admin = owner;
+      const pool = contracts.mintBoxPool;
       const salt = Buffer.alloc(32, 0);
       const salesPrice = this.ruleForm.salesPrice;
       const decimal =
@@ -1178,7 +1184,7 @@ export default {
         open: this.ruleForm.mintStartAt / 1000,
         close: this.ruleForm.mintEndAt / 1000,
       };
-      this.deployArray = [owner, name, symbol, root, imp, admin, salt, param];
+      this.deployArray = [owner, name, symbol, root, imp, salt, pool, param];
       const deployment =
         await contracts.ERC721MultipleCollectionFactory.getAddress(
           owner,
@@ -1186,8 +1192,8 @@ export default {
           symbol,
           root,
           imp,
-          admin,
           salt,
+          pool,
           param
         );
       this.collectionForm.contractAddress = deployment;
@@ -1258,7 +1264,7 @@ export default {
       const creator = owner;
       const supply = this.ruleForm.sub;
       const imp = contracts.ERC1155SingleCollectionUpgradeableImp;
-      const admin = owner;
+      const pool = contracts.mintBoxPool;
       const salt = Buffer.alloc(32, 0);
       const salesPrice = this.ruleForm.salesPrice;
       const decimal =
@@ -1279,8 +1285,8 @@ export default {
         creator,
         supply,
         imp,
-        admin,
         salt,
+        pool,
         param,
       ];
       const deployment =
@@ -1292,8 +1298,8 @@ export default {
           creator,
           supply,
           imp,
-          admin,
           salt,
+          pool,
           param
         );
       this.collectionForm.contractAddress = deployment;

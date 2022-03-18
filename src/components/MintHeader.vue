@@ -54,6 +54,10 @@
                   <i class="el-icon-download rotate-right"></i>
                   {{ $t("nav.logout") }}</el-dropdown-item
                 >
+                <el-dropdown-item command="account">
+                  <i class="el-icon-download rotate-right"></i>
+                  account</el-dropdown-item
+                >
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -123,6 +127,10 @@
                     <el-dropdown-item command="logout">
                       <i class="el-icon-download rotate-right"></i>
                       {{ $t("nav.logout") }}</el-dropdown-item
+                    >
+                    <el-dropdown-item command="account">
+                      <i class="el-icon-download rotate-right"></i>
+                      account</el-dropdown-item
                     >
                   </el-dropdown-menu>
                 </el-dropdown>
@@ -194,6 +202,7 @@ export default {
       switch (command) {
         case "account":
           console.log(command);
+          this.$router.push("/account");
           break;
         case "logout":
           removeToken();

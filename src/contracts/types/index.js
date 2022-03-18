@@ -7,7 +7,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 exports.__esModule = true;
-exports.IFactoryWrapper__factory = exports.ICollection__factory = exports.ERC721SingleCollectionFactory__factory = exports.ERC721MultipleCollectionFactory__factory = exports.ERC1155SingleCollectionFactory__factory = exports.CollectionProxy__factory = exports.ERC721UpgradeableWrapper__factory = exports.ERC721SingleCollectionUpgradeable__factory = exports.ERC721MultiCollectionUpgradeable__factory = exports.ERC1155UpgradeableWrapper__factory = exports.ERC1155SingleCollectionUpgradeable__factory = exports.DelegatePay__factory = exports.ERC721SingleBoxWrapper__factory = exports.ERC721MultipleBoxWrapper__factory = exports.ERC1155SingleBoxWrapper__factory = exports.CollectionWrapper__factory = exports.IERC20__factory = exports.TransparentUpgradeableProxy__factory = exports.ProxyAdmin__factory = exports.Proxy__factory = exports.ERC1967Upgrade__factory = exports.ERC1967Proxy__factory = exports.IBeacon__factory = exports.Ownable__factory = exports.IERC165Upgradeable__factory = exports.ERC165Upgradeable__factory = exports.IERC721Upgradeable__factory = exports.IERC721ReceiverUpgradeable__factory = exports.IERC721MetadataUpgradeable__factory = exports.IERC721EnumerableUpgradeable__factory = exports.ERC721EnumerableUpgradeable__factory = exports.ERC721BurnableUpgradeable__factory = exports.ERC721Upgradeable__factory = exports.IERC1155Upgradeable__factory = exports.IERC1155ReceiverUpgradeable__factory = exports.IERC1155MetadataURIUpgradeable__factory = exports.ERC1155SupplyUpgradeable__factory = exports.ERC1155BurnableUpgradeable__factory = exports.ERC1155Upgradeable__factory = exports.OwnableUpgradeable__factory = void 0;
+exports.MintBoxPool__factory = exports.ICollection__factory = exports.ERC721SingleCollectionFactory__factory = exports.ERC721MultipleCollectionFactory__factory = exports.ERC1155SingleCollectionFactory__factory = exports.CollectionProxy__factory = exports.ERC721UpgradeableWrapper__factory = exports.ERC721SingleCollectionUpgradeable__factory = exports.ERC721MultiCollectionUpgradeable__factory = exports.ERC1155UpgradeableWrapper__factory = exports.ERC1155SingleCollectionUpgradeable__factory = exports.DelegatePay__factory = exports.ERC721SingleBoxWrapper__factory = exports.ERC721MultipleBoxWrapper__factory = exports.ERC1155SingleBoxWrapper__factory = exports.CollectionWrapper__factory = exports.IERC20__factory = exports.Proxy__factory = exports.ERC1967Upgrade__factory = exports.ERC1967Proxy__factory = exports.IBeacon__factory = exports.IERC165Upgradeable__factory = exports.ERC165Upgradeable__factory = exports.IERC721Upgradeable__factory = exports.IERC721ReceiverUpgradeable__factory = exports.IERC721MetadataUpgradeable__factory = exports.IERC721EnumerableUpgradeable__factory = exports.ERC721EnumerableUpgradeable__factory = exports.ERC721BurnableUpgradeable__factory = exports.ERC721Upgradeable__factory = exports.IERC1155Upgradeable__factory = exports.IERC1155ReceiverUpgradeable__factory = exports.IERC1155MetadataURIUpgradeable__factory = exports.ERC1155SupplyUpgradeable__factory = exports.ERC1155BurnableUpgradeable__factory = exports.ERC1155Upgradeable__factory = exports.OwnableUpgradeable__factory = void 0;
 var OwnableUpgradeable__factory_1 = require("./factories/OwnableUpgradeable__factory");
 __createBinding(exports, OwnableUpgradeable__factory_1, "OwnableUpgradeable__factory");
 var ERC1155Upgradeable__factory_1 = require("./factories/ERC1155Upgradeable__factory");
@@ -40,8 +40,6 @@ var ERC165Upgradeable__factory_1 = require("./factories/ERC165Upgradeable__facto
 __createBinding(exports, ERC165Upgradeable__factory_1, "ERC165Upgradeable__factory");
 var IERC165Upgradeable__factory_1 = require("./factories/IERC165Upgradeable__factory");
 __createBinding(exports, IERC165Upgradeable__factory_1, "IERC165Upgradeable__factory");
-var Ownable__factory_1 = require("./factories/Ownable__factory");
-__createBinding(exports, Ownable__factory_1, "Ownable__factory");
 var IBeacon__factory_1 = require("./factories/IBeacon__factory");
 __createBinding(exports, IBeacon__factory_1, "IBeacon__factory");
 var ERC1967Proxy__factory_1 = require("./factories/ERC1967Proxy__factory");
@@ -50,10 +48,6 @@ var ERC1967Upgrade__factory_1 = require("./factories/ERC1967Upgrade__factory");
 __createBinding(exports, ERC1967Upgrade__factory_1, "ERC1967Upgrade__factory");
 var Proxy__factory_1 = require("./factories/Proxy__factory");
 __createBinding(exports, Proxy__factory_1, "Proxy__factory");
-var ProxyAdmin__factory_1 = require("./factories/ProxyAdmin__factory");
-__createBinding(exports, ProxyAdmin__factory_1, "ProxyAdmin__factory");
-var TransparentUpgradeableProxy__factory_1 = require("./factories/TransparentUpgradeableProxy__factory");
-__createBinding(exports, TransparentUpgradeableProxy__factory_1, "TransparentUpgradeableProxy__factory");
 var IERC20__factory_1 = require("./factories/IERC20__factory");
 __createBinding(exports, IERC20__factory_1, "IERC20__factory");
 var CollectionWrapper__factory_1 = require("./factories/CollectionWrapper__factory");
@@ -86,5 +80,5 @@ var ERC721SingleCollectionFactory__factory_1 = require("./factories/ERC721Single
 __createBinding(exports, ERC721SingleCollectionFactory__factory_1, "ERC721SingleCollectionFactory__factory");
 var ICollection__factory_1 = require("./factories/ICollection__factory");
 __createBinding(exports, ICollection__factory_1, "ICollection__factory");
-var IFactoryWrapper__factory_1 = require("./factories/IFactoryWrapper__factory");
-__createBinding(exports, IFactoryWrapper__factory_1, "IFactoryWrapper__factory");
+var MintBoxPool__factory_1 = require("./factories/MintBoxPool__factory");
+__createBinding(exports, MintBoxPool__factory_1, "MintBoxPool__factory");

@@ -30,7 +30,7 @@ interface ERC721MultiCollectionUpgradeableInterface
     "claimAndMint(address,bytes32,string,address,bytes32[])": FunctionFragment;
     "close()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
-    "initialize(address,string,string,bytes32,(address,uint256,uint64,uint64,string))": FunctionFragment;
+    "initialize(address,string,string,bytes32,address,(address,uint256,uint64,uint64,string))": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "isClaimed(bytes32)": FunctionFragment;
     "isClosed()": FunctionFragment;
@@ -47,6 +47,7 @@ interface ERC721MultiCollectionUpgradeableInterface
     "ownerOf(uint256)": FunctionFragment;
     "param()": FunctionFragment;
     "payToken()": FunctionFragment;
+    "pool()": FunctionFragment;
     "price()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "rootExists(bytes32)": FunctionFragment;
@@ -70,7 +71,6 @@ interface ERC721MultiCollectionUpgradeableInterface
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "valueOf(uint256)": FunctionFragment;
-    "withdraw(address,address,uint256)": FunctionFragment;
   };
 
   encodeFunctionData(functionFragment: "addRoot", values: [BytesLike]): string;
@@ -100,6 +100,7 @@ interface ERC721MultiCollectionUpgradeableInterface
       string,
       string,
       BytesLike,
+      string,
       {
         payToken: string;
         price: BigNumberish;
@@ -146,6 +147,7 @@ interface ERC721MultiCollectionUpgradeableInterface
   ): string;
   encodeFunctionData(functionFragment: "param", values?: undefined): string;
   encodeFunctionData(functionFragment: "payToken", values?: undefined): string;
+  encodeFunctionData(functionFragment: "pool", values?: undefined): string;
   encodeFunctionData(functionFragment: "price", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -231,10 +233,6 @@ interface ERC721MultiCollectionUpgradeableInterface
     functionFragment: "valueOf",
     values: [BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "withdraw",
-    values: [string, string, BigNumberish]
-  ): string;
 
   decodeFunctionResult(functionFragment: "addRoot", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
@@ -273,6 +271,7 @@ interface ERC721MultiCollectionUpgradeableInterface
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "param", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "payToken", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "pool", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -329,7 +328,6 @@ interface ERC721MultiCollectionUpgradeableInterface
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "valueOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
     "AddRoot(bytes32)": EventFragment;
@@ -346,7 +344,6 @@ interface ERC721MultiCollectionUpgradeableInterface
     "SetPayToken(address)": EventFragment;
     "SetPrice(uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
-    "Withdrawal(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AddRoot"): EventFragment;
@@ -363,7 +360,6 @@ interface ERC721MultiCollectionUpgradeableInterface
   getEvent(nameOrSignatureOrTopic: "SetPayToken"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "SetPrice"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Withdrawal"): EventFragment;
 }
 
 export type AddRootEvent = TypedEvent<[string] & { root: string }>;
@@ -444,14 +440,6 @@ export type SetPriceEvent = TypedEvent<[BigNumber] & { price: BigNumber }>;
 
 export type TransferEvent = TypedEvent<
   [string, string, BigNumber] & { from: string; to: string; tokenId: BigNumber }
->;
-
-export type WithdrawalEvent = TypedEvent<
-  [string, string, BigNumber] & {
-    payToken: string;
-    to: string;
-    amount: BigNumber;
-  }
 >;
 
 export class ERC721MultiCollectionUpgradeable extends BaseContract {
@@ -545,6 +533,7 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
       name: string,
       symbol: string,
       root: BytesLike,
+      pool: string,
       param: {
         payToken: string;
         price: BigNumberish;
@@ -619,6 +608,8 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
     >;
 
     payToken(overrides?: CallOverrides): Promise<[string]>;
+
+    pool(overrides?: CallOverrides): Promise<[string]>;
 
     price(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -741,13 +732,6 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
-
-    withdraw(
-      payToken: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
   };
 
   addRoot(
@@ -797,6 +781,7 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
     name: string,
     symbol: string,
     root: BytesLike,
+    pool: string,
     param: {
       payToken: string;
       price: BigNumberish;
@@ -868,6 +853,8 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
   >;
 
   payToken(overrides?: CallOverrides): Promise<string>;
+
+  pool(overrides?: CallOverrides): Promise<string>;
 
   price(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -981,13 +968,6 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
 
   valueOf(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-  withdraw(
-    payToken: string,
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   callStatic: {
     addRoot(root: BytesLike, overrides?: CallOverrides): Promise<void>;
 
@@ -1030,6 +1010,7 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
       name: string,
       symbol: string,
       root: BytesLike,
+      pool: string,
       param: {
         payToken: string;
         price: BigNumberish;
@@ -1101,6 +1082,8 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
     >;
 
     payToken(overrides?: CallOverrides): Promise<string>;
+
+    pool(overrides?: CallOverrides): Promise<string>;
 
     price(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1206,13 +1189,6 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    withdraw(
-      payToken: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
   };
 
   filters: {
@@ -1455,24 +1431,6 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
       [string, string, BigNumber],
       { from: string; to: string; tokenId: BigNumber }
     >;
-
-    "Withdrawal(address,address,uint256)"(
-      payToken?: string | null,
-      to?: string | null,
-      amount?: null
-    ): TypedEventFilter<
-      [string, string, BigNumber],
-      { payToken: string; to: string; amount: BigNumber }
-    >;
-
-    Withdrawal(
-      payToken?: string | null,
-      to?: string | null,
-      amount?: null
-    ): TypedEventFilter<
-      [string, string, BigNumber],
-      { payToken: string; to: string; amount: BigNumber }
-    >;
   };
 
   estimateGas: {
@@ -1523,6 +1481,7 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
       name: string,
       symbol: string,
       root: BytesLike,
+      pool: string,
       param: {
         payToken: string;
         price: BigNumberish;
@@ -1587,6 +1546,8 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
     param(overrides?: CallOverrides): Promise<BigNumber>;
 
     payToken(overrides?: CallOverrides): Promise<BigNumber>;
+
+    pool(overrides?: CallOverrides): Promise<BigNumber>;
 
     price(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1700,13 +1661,6 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
       amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    withdraw(
-      payToken: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1760,6 +1714,7 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
       name: string,
       symbol: string,
       root: BytesLike,
+      pool: string,
       param: {
         payToken: string;
         price: BigNumberish;
@@ -1830,6 +1785,8 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
     param(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     payToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    pool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1951,13 +1908,6 @@ export class ERC721MultiCollectionUpgradeable extends BaseContract {
     valueOf(
       amount: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    withdraw(
-      payToken: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }
