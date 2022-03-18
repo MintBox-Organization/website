@@ -129,6 +129,9 @@ export default {
         }
       }
     }
+    .copy-icon {
+      cursor: pointer;
+    }
   }
 }
 </style>

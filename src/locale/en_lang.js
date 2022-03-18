@@ -4,6 +4,7 @@ export default {
     explore: "Explore",
     myNfts: "My NFTS",
     connectWallet: "Connect Wallet",
+    logout: "Logout",
   },
   home: {
     title: `NFTS

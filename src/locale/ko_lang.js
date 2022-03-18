@@ -4,6 +4,7 @@ export default {
     explore: "탐색하기",
     myNfts: "나의 NFT",
     connectWallet: "지갑 연결하기",
+    logout: "로그아웃",
   },
   home: {
     title: "모두를 위한 간편한 NFT 서비스",

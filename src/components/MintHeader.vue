@@ -1,61 +1,135 @@
 <template>
-  <div id="mintNav" class="hidden-sm-and-down">
-    <router-link :to="`/`">
-      <img class="logo" src="@/assets/images/logo.png" alt="" />
-    </router-link>
-    <div class="container">
-      <el-menu
-        class="el-menu-mint"
-        :default-active="activePath"
-        router
-        mode="horizontal"
-        text-color="#564e65"
-        active-text-color="#A27EC6"
-      >
-        <el-menu-item
-          index="/create"
-          :class="activePath == '/create' ? 'active' : ''"
-          >{{ $t("nav.mint") }}</el-menu-item
+  <div>
+    <div id="mintNav" class="pc-nav">
+      <router-link :to="`/`">
+        <img class="logo" src="@/assets/images/logo.png" alt="" />
+      </router-link>
+      <div class="container">
+        <el-menu
+          class="el-menu-mint"
+          :default-active="activePath"
+          router
+          mode="horizontal"
+          text-color="#564e65"
+          active-text-color="#A27EC6"
         >
-        <el-menu-item
-          index="/explore"
-          :class="activePath == '/explore' ? 'active' : ''"
-          >{{ $t("nav.explore") }}</el-menu-item
-        >
-        <el-menu-item
-          index="/mynfts"
-          :class="activePath == '/mynfts' ? 'active' : ''"
-        >
-          {{ $t("nav.myNfts") }}</el-menu-item
-        >
-      </el-menu>
-      <div class="login-info">
-        <div v-if="!isLogin" class="connect-wallet" @click="getConnect">
-          {{ $t("nav.connectWallet") }}
-        </div>
-        <div v-else class="connect-wallet">
-          <el-dropdown
-            trigger="click"
-            @command="
-              (command) => {
-                handleCommand(command);
-              }
-            "
+          <el-menu-item
+            index="/create"
+            :class="activePath == '/create' ? 'active' : ''"
+            >{{ $t("nav.mint") }}</el-menu-item
           >
-            <div>
-              {{ formatAccount }}
-            </div>
-            <el-dropdown-menu slot="dropdown">
-              <!-- <el-dropdown-item divided command="account">
+          <el-menu-item
+            index="/explore"
+            :class="activePath == '/explore' ? 'active' : ''"
+            >{{ $t("nav.explore") }}</el-menu-item
+          >
+          <el-menu-item
+            index="/mynfts"
+            :class="activePath == '/mynfts' ? 'active' : ''"
+          >
+            {{ $t("nav.myNfts") }}</el-menu-item
+          >
+        </el-menu>
+        <div class="login-info">
+          <div v-if="!isLogin" class="connect-wallet" @click="getConnect">
+            {{ $t("nav.connectWallet") }}
+          </div>
+          <div v-else class="connect-wallet">
+            <el-dropdown
+              trigger="click"
+              @command="
+                (command) => {
+                  handleCommand(command);
+                }
+              "
+            >
+              <div>
+                {{ formatAccount }}
+              </div>
+              <el-dropdown-menu slot="dropdown">
+                <!-- <el-dropdown-item divided command="account">
             <i class="el-icon-user"></i> Account</el-dropdown-item
           > -->
-              <el-dropdown-item command="logout">
-                <i class="el-icon-download rotate-right"></i>
-                Logout</el-dropdown-item
-              >
+                <el-dropdown-item command="logout">
+                  <i class="el-icon-download rotate-right"></i>
+                  {{ $t("nav.logout") }}</el-dropdown-item
+                >
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+          <el-dropdown
+            trigger="click"
+            placement="bottom"
+            @command="handleLanguageCommand"
+          >
+            <span class="el-dropdown-link">
+              <i class="iconfont icon-diqiu change"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="ko">한국어</el-dropdown-item>
+              <el-dropdown-item command="en">English</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
+      </div>
+    </div>
+    <div class="mobile-nav">
+      <router-link :to="`/`">
+        <img class="logo" src="@/assets/images/logo.png" alt="" />
+      </router-link>
+
+      <div class="mobile-nav-right">
+        <el-dropdown
+          trigger="click"
+          placement="bottom"
+          @command="handleSwitchRouter"
+          style="margin-right: 20px"
+          :hide-on-click="false"
+        >
+          <span class="el-dropdown-link">
+            <i class="iconfont icon-caidan menu-icon"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="create">{{
+              $t("nav.mint")
+            }}</el-dropdown-item>
+            <el-dropdown-item command="explore">{{
+              $t("nav.explore")
+            }}</el-dropdown-item>
+            <el-dropdown-item command="myNfts">{{
+              $t("nav.myNfts")
+            }}</el-dropdown-item>
+
+            <el-dropdown-item command="connectWallet">
+              <div v-if="!isLogin" @click="getConnect">
+                {{ $t("nav.connectWallet") }}
+              </div>
+              <div v-else>
+                <el-dropdown
+                  trigger="click"
+                  @command="
+                    (command) => {
+                      handleCommand(command);
+                    }
+                  "
+                >
+                  <div>
+                    {{ formatAccount }}
+                  </div>
+                  <el-dropdown-menu slot="dropdown">
+                    <!-- <el-dropdown-item divided command="account">
+            <i class="el-icon-user"></i> Account</el-dropdown-item
+          > -->
+                    <el-dropdown-item command="logout">
+                      <i class="el-icon-download rotate-right"></i>
+                      {{ $t("nav.logout") }}</el-dropdown-item
+                    >
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </div>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
         <el-dropdown
           trigger="click"
           placement="bottom"
@@ -167,6 +241,21 @@ export default {
       this.$i18n.locale = val;
       localStorage.setItem("mint-box-lang", JSON.stringify(val));
     },
+    handleSwitchRouter(val) {
+      switch (val) {
+        case "create":
+          this.$router.push("/create");
+          break;
+        case "explore":
+          this.$router.push("/explore");
+          break;
+        case "myNfts":
+          this.$router.push("/mynfts");
+          break;
+        default:
+          break;
+      }
+    },
   },
 
   watch: {
@@ -180,6 +269,31 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@media (min-width: 990px) {
+  .mobile-nav {
+    display: none !important;
+  }
+}
+@media (max-width: 991px) {
+  .pc-nav {
+    display: none !important;
+  }
+}
+.login-info {
+  display: flex;
+  align-items: center;
+}
+.connect-wallet {
+  margin: 0 20px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  border: 1px solid #e7e5e8;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5), 0px 2px 0px 0px #e7e5e8;
+  color: #564e65;
+  cursor: pointer;
+}
 #mintNav {
   display: flex;
   align-items: center;
@@ -221,21 +335,6 @@ export default {
         border-radius: 5px;
       }
     }
-    .login-info {
-      display: flex;
-      align-items: center;
-    }
-    .connect-wallet {
-      margin-right: 20px;
-      padding: 12px 16px;
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 4px;
-      border: 1px solid #e7e5e8;
-      box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5), 0px 2px 0px 0px #e7e5e8;
-      color: #564e65;
-      cursor: pointer;
-    }
   }
 }
 .rotate-right {
@@ -243,5 +342,22 @@ export default {
 }
 .change {
   font-size: 30px;
+}
+
+.mobile-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  .logo {
+    width: 120px;
+  }
+  .mobile-nav-right {
+    display: flex;
+    align-items: center;
+    .menu-icon {
+      font-size: 30px;
+    }
+  }
 }
 </style>
