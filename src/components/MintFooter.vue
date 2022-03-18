@@ -3,12 +3,14 @@
     <img class="logo" src="@/assets/images/logo.png" alt="" />
     <div class="contact-box">
       <span class="copy-right"> @ 2021 MINTBOX </span>
-      <span>
-        <el-button type="text" @click="terms">Terms & Condition</el-button>
-      </span>
-      <span>
-        <el-button type="text" @click="contact"> Contact</el-button>
-      </span>
+      <div>
+        <span>
+          <el-button type="text" @click="terms">Terms & Condition</el-button>
+        </span>
+        <span>
+          <el-button type="text" @click="contact"> Contact</el-button>
+        </span>
+      </div>
     </div>
   </div>
 </template>

@@ -47,7 +47,7 @@ body {
   }
   .el-footer {
     text-align: center;
-    padding: 0 50px;
+    // padding: 0 50px;
     border-top: 1px solid #e6e6e6;
   }
 }

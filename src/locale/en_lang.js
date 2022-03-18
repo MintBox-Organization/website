@@ -1,7 +1,7 @@
 export default {
   nav: {
     mint: "MINT",
-    explore: "Explore",
+    explore: "EXPLORE",
     myNfts: "My NFTS",
     connectWallet: "Connect Wallet",
     logout: "Logout",
