@@ -160,7 +160,7 @@ export default {
         });
       });
       window.ethereum.on("chainChanged", (chainId) => {
-        contracts.setChainID(chainId);
+        contracts.setChainID(Number(chainId));
         this.$store.commit(UPDATE_CHAINID, chainId);
       });
     },
