@@ -177,7 +177,6 @@ export default {
       this.chainId = this.$store.state.chainId
         ? this.$store.state.chainId
         : await contracts.signer.getChainId();
-
       this.currentCurrencyAddress =
         this.symbolListObj[this.chainId][this.currentCurrency].address;
       this.currentCurrencyDecimal =
@@ -186,13 +185,7 @@ export default {
         this.currentCurrencyAddress,
         this.account
       );
-
       const resultMax = max.toString() / this.currentCurrencyDecimal;
-      console.log(
-        max.toString(),
-        this.currentCurrencyAddress,
-        this.currentCurrencyDecimal
-      );
       this.currentCurrencyAccount = resultMax;
     },
     handleWithdrawMax() {
@@ -227,7 +220,7 @@ export default {
           to: contracts.mintBoxPool,
           data,
         });
-        const receipt = await tx.wait();
+        const receipt = await tx.wait(1);
         this.ruleForm.withdraw = null;
         this.withdraw();
         this.$message.success("trade successfully");
