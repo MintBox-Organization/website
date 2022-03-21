@@ -12,8 +12,8 @@ import {
 } from "./types";
 
 class Contracts {
-  public readonly delegatePay = "0x4C7de9e14eeF1aCDfaE61978b4E6Abe14396fe27";
-  public readonly mintBoxPool = "0xc41E90AcA4dA792Dc25af7Ff0A46433D4Ef93F66";
+  public readonly DelegatePayMap = new Map();
+  public readonly MintBoxPoolMap = new Map();
   public readonly ERC721SingleCollectionUpgradeableImpMap = new Map();
   public readonly ERC721MultiCollectionUpgradeableImpMap = new Map();
   public readonly ERC1155SingleCollectionUpgradeableImpMap = new Map();
@@ -30,6 +30,14 @@ class Contracts {
   constructor() {
     const testchains = [4, 97, 80001];
     for (const chain of testchains) {
+      this.DelegatePayMap.set(
+        chain,
+        "0x4C7de9e14eeF1aCDfaE61978b4E6Abe14396fe27"
+      );
+      this.MintBoxPoolMap.set(
+        chain,
+        "0xc41E90AcA4dA792Dc25af7Ff0A46433D4Ef93F66"
+      );
       this.ERC721SingleCollectionUpgradeableImpMap.set(
         chain,
         "0xA474F16c47164593E14156Cc3bE651B7417daAc2"
@@ -49,6 +57,42 @@ class Contracts {
       this.ERC721MultipleCollectionFactoryAddressMap.set(
         chain,
         "0x6e942DD36Ca312Faf82Cf39D82bf6F079e4d15D4"
+      );
+      this.ERC1155SingleCollectionFactoryAddressMap.set(
+        chain,
+        "0x758B0bDb994cEd9b5caB4256b8Dedf0B0A715E4f"
+      );
+    }
+
+    const mainChains = [1, 56, 137];
+    for (const chain of mainChains) {
+      this.DelegatePayMap.set(
+        chain,
+        "0x4C7de9e14eeF1aCDfaE61978b4E6Abe14396fe27"
+      );
+      this.MintBoxPoolMap.set(
+        chain,
+        "0x2bB6a92E46f1e626BeCb361D3efF3E6f10107718"
+      );
+      this.ERC721SingleCollectionUpgradeableImpMap.set(
+        chain,
+        "0x98416DE52409855C1071A419e4C826e454b52a8B"
+      );
+      this.ERC721MultiCollectionUpgradeableImpMap.set(
+        chain,
+        "0x5632723Aa7B235cEbdcE96fC9229cbd83bbC6bf9"
+      );
+      this.ERC1155SingleCollectionUpgradeableImpMap.set(
+        chain,
+        "0xBD7F9Ee5B47C302FF371e9F8b44e411a589f1d51"
+      );
+      this.ERC721SingleCollectionFactoryAddressMap.set(
+        chain,
+        "0xeeF35D19f60bb79807f27DD06d6A3fa2925FBeE2"
+      );
+      this.ERC721MultipleCollectionFactoryAddressMap.set(
+        chain,
+        "0xe0Fb944135B4c08B34516eC71b0752A6986f2924"
       );
       this.ERC1155SingleCollectionFactoryAddressMap.set(
         chain,
@@ -140,6 +184,14 @@ class Contracts {
       this.ERC1155SingleCollectionFactoryAddress,
       this.provider
     );
+  }
+
+  public get mintBoxPool() {
+    return this.MintBoxPoolMap.get(this.chainId);
+  }
+
+  public get delegatePay() {
+    return this.DelegatePayMap.get(this.chainId);
   }
 
   public get MintBoxPool() {
