@@ -111,6 +111,9 @@ export default {
     ],
     checkNetwork: "{network} 네트워크를 선택하십시오.",
     tipsUpload: "NFT를 업로드하세요",
+    CID_DUMPLICATED: "CID가 이미 있습니다. 다시 업로드하십시오.",
+    CID_EXISTED: "CID가 이미 있습니다. 다시 업로드하십시오.",
+    PROOFS_ARE_REQUIRED: "argument error",
   },
   explore: {
     exploreCollections: "컬렉션 탐색하기",

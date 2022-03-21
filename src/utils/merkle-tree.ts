@@ -6,6 +6,9 @@ export default class MerkleTree {
 	private readonly layers: Buffer[][]
 
 	constructor(elements: Buffer[]) {
+		if (MerkleTree.elementRepeat(elements)) {
+			throw 'repeat leaves'
+		}
 		this.elements = Array.from(elements)
 		// Sort elements
 		this.elements.sort(Buffer.compare)
@@ -118,6 +121,21 @@ export default class MerkleTree {
 	}
 
 	private static sortAndConcat(...args: Buffer[]): Buffer {
+		console.log(Buffer.concat(Array.from(args).sort(Buffer.compare)).toString('hex'))
 		return Buffer.concat(Array.from(args).sort(Buffer.compare))
 	}
+
+	public static elementRepeat(elements: Buffer[]): boolean {
+		if (elements.length == 0) {
+			return true
+		}
+		const m = new Map<string, string>()
+		for (const element of elements) {
+			const key = element.toString('hex')
+			if (m.get(key)) return true
+			m.set(key, key)
+		}
+		return false
+	}
 }
+

@@ -3,6 +3,9 @@ exports.__esModule = true;
 var ethereumjs_util_1 = require("ethereumjs-util");
 var MerkleTree = /** @class */ (function () {
     function MerkleTree(elements) {
+        if (MerkleTree.elementRepeat(elements)) {
+            throw 'repeat leaves';
+        }
         this.elements = Array.from(elements);
         // Sort elements
         this.elements.sort(Buffer.compare);
@@ -94,7 +97,22 @@ var MerkleTree = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
+        console.log(Buffer.concat(Array.from(args).sort(Buffer.compare)).toString('hex'));
         return Buffer.concat(Array.from(args).sort(Buffer.compare));
+    };
+    MerkleTree.elementRepeat = function (elements) {
+        if (elements.length == 0) {
+            return true;
+        }
+        var m = new Map();
+        for (var _i = 0, elements_1 = elements; _i < elements_1.length; _i++) {
+            var element = elements_1[_i];
+            var key = element.toString('hex');
+            if (m.get(key))
+                return true;
+            m.set(key, key);
+        }
+        return false;
     };
     return MerkleTree;
 }());

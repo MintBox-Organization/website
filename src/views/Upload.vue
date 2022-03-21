@@ -347,6 +347,7 @@ let s3Client;
 export default {
   name: "Upload",
   components: { MintUpload },
+
   data() {
     let checkSalesPrice = (rule, value, callback) => {
       if (!value) {
@@ -626,7 +627,6 @@ export default {
       // this.fullscreenLoading = true;
 
       cidCheck(this.uploadcId).then((res) => {
-        console.log(res);
         if (res.code == 412) {
           this.$message.error(this.$t("upload.fileSupported"));
           return (this.fullscreenLoading = false);
@@ -641,6 +641,7 @@ export default {
               this.$refs.mintUpload.handlePreviewLoading();
             } else {
               const owner = this.$store.state.account;
+              console.log("res", res.data.list[0].cid);
               const imgUrl = "https://ipfs.io/ipfs/" + res.data.list[0].cid;
               let obj = {
                 creator: owner,
@@ -772,7 +773,12 @@ export default {
           });
         })
       );
-      const res = parseTokenMap(newTokens);
+      let res;
+      try {
+        res = parseTokenMap(newTokens);
+      } catch (error) {
+        return this.$message.error(this.$t("upload.CID_EXISTED"));
+      }
       _this.ruleForm.rootHash = res.merkleRoot;
       const arrs = _this.ruleForm.item.map((item) => {
         const data = res.tokens.find((i) => item.metadata == i.uri);
@@ -792,6 +798,7 @@ export default {
           // } else {
           // }
         } else {
+          this.$message.error(this.$t(`upload.${res.message}`));
           this.createBtnDisabled = false;
         }
       });
@@ -1138,6 +1145,7 @@ export default {
       }
     },
     async addMultiple() {
+      console.log("addMultiple");
       const deployment = this.ruleForm.collection.contractAddress;
       try {
         this.loadingText = this.transactionText;
@@ -1405,6 +1413,13 @@ export default {
     },
   },
   created() {
+    const tokens = [
+      {
+        creator: "0x866925e79c447352711bF740183AA3Cc67371E16",
+        uri: "ipfs://bafkreico3zvaim4juncwouno3ewab2m2e6zqk4zrllvpa7kavrw6wtek3q",
+      },
+    ];
+    const res = parseTokenMap(tokens);
     this.ruleForm.type = this.$route.query.type;
     this.addr = this.$route.query.addr;
     if (this.addr) {

@@ -149,6 +149,7 @@ export default {
         ],
         description: [{ validator: checkSpace, trigger: "blur" }],
       },
+      timer: null,
     };
   },
   methods: {
@@ -195,13 +196,14 @@ export default {
     },
     handlePreviewLoading() {
       this.isPreview = true;
-      setTimeout(() => {
+      this.timer = setTimeout(() => {
         this.isPreview = false;
         this.$emit("update:previewImg", "");
       }, 1000 * 60);
     },
     loadImgSuccess(e) {
       this.isPreview = false;
+      clearTimeout(this.timer);
     },
   },
   created() {},

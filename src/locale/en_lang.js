@@ -115,6 +115,9 @@ export default {
     ],
     checkNetwork: "Please select the {network} network.",
     tipsUpload: "Please upload NFTs",
+    CID_DUMPLICATED: "The CID already exists, please upload again",
+    CID_EXISTED: "The CID already exists, please upload again",
+    PROOFS_ARE_REQUIRED: "argument error",
   },
   explore: {
     exploreCollections: "Explore Collections",
