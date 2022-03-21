@@ -207,7 +207,6 @@ export default {
   created() {},
   watch: {
     mutipleTokens(newValue) {
-      console.log(newValue);
       newValue.forEach((item) => {
         item["url"] = item.imgUrl;
       });

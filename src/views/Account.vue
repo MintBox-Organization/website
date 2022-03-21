@@ -41,6 +41,7 @@
           <el-button
             class="submit-btn"
             @click="handleWithdraw"
+            :disabled="btnDisabled"
             :loading="loading"
             >{{ $t("account.claimNew") }}</el-button
           >
@@ -69,6 +70,7 @@ export default {
     };
     return {
       loading: false,
+      btnDisabled: true,
       account: "",
       ruleForm: {
         withdraw: "",
@@ -185,6 +187,13 @@ export default {
       this.ruleForm.withdraw = null;
       this.withdraw();
     },
+    "ruleForm.withdraw"(newValue) {
+      if (newValue == "") {
+        this.btnDisabled = true;
+      } else {
+        this.btnDisabled = false;
+      }
+    },
   },
 };
 </script>
@@ -248,6 +257,10 @@ export default {
     border-radius: 5px;
     border: none;
     cursor: pointer;
+  }
+  .submit-btn.is-disabled {
+    // color: #ccc;
+    background: #ccc;
   }
 }
 </style>

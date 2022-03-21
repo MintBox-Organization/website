@@ -51,11 +51,12 @@
             <i class="el-icon-user"></i> Account</el-dropdown-item
           > -->
                 <el-dropdown-item command="account">
-                  <i class="el-icon-download rotate-right"></i>
+                  <!-- <i class="el-icon-download rotate-right"></i> -->
+                  <i class="iconfont icon-zhanghushouru icon"></i>
                   {{ $t("nav.account") }}</el-dropdown-item
                 >
                 <el-dropdown-item command="logout">
-                  <i class="el-icon-download rotate-right"></i>
+                  <i class="iconfont icon-zhuxiao icon"></i>
                   {{ $t("nav.logout") }}</el-dropdown-item
                 >
               </el-dropdown-menu>
@@ -369,5 +370,8 @@ export default {
       font-size: 30px;
     }
   }
+}
+.icon {
+  font-size: 18px;
 }
 </style>
