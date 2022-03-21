@@ -90,7 +90,7 @@ class Contracts {
       );
       this.ERC1155SingleCollectionFactoryAddressMap.set(
         c,
-        "0x758B0bDb994cEd9b5caB4256b8Dedf0B0A715E4f"
+        "0x00F73B9CD30157859b1b947bd2Bc2987265781D9"
       );
     }
   }
