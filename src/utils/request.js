@@ -54,6 +54,8 @@ service.interceptors.response.use(
         // to re-login
         connect();
         return;
+      } else if (res.code == 412) {
+        return res;
       }
       // Message({
       //   message: res.message || "Error",

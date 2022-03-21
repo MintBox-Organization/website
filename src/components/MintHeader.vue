@@ -52,7 +52,7 @@
           > -->
                 <el-dropdown-item command="account">
                   <i class="el-icon-download rotate-right"></i>
-                  Account</el-dropdown-item
+                  {{ $t("nav.account") }}</el-dropdown-item
                 >
                 <el-dropdown-item command="logout">
                   <i class="el-icon-download rotate-right"></i>
@@ -103,7 +103,6 @@
             <el-dropdown-item command="myNfts">{{
               $t("nav.myNfts")
             }}</el-dropdown-item>
-
             <el-dropdown-item command="connectWallet">
               <div v-if="!isLogin" @click="getConnect">
                 {{ $t("nav.connectWallet") }}
@@ -130,7 +129,7 @@
                     >
                     <el-dropdown-item command="account">
                       <i class="el-icon-download rotate-right"></i>
-                      account</el-dropdown-item
+                      {{ $t("nav.account") }}</el-dropdown-item
                     >
                   </el-dropdown-menu>
                 </el-dropdown>

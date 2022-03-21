@@ -5,6 +5,7 @@ export default {
     myNfts: "My NFTS",
     connectWallet: "Connect Wallet",
     logout: "Logout",
+    account: "Account",
   },
   home: {
     title: `NFTS
@@ -267,5 +268,9 @@ export default {
     website: "Website",
     download: "Download",
     deploy: "View",
+  },
+  account: {
+    claim: "Claim",
+    claimNew: "Claim New",
   },
 };

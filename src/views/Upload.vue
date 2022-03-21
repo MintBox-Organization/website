@@ -622,11 +622,13 @@ export default {
       this.sendUploadCid();
     },
     sendUploadCid() {
-      this.fullscreenLoading = true;
+      // this.fullscreenLoading = true;
 
       cidCheck(this.uploadcId).then((res) => {
+        console.log(res);
         if (res.code == 412) {
           this.$message.error(this.$t("upload.fileSupported"));
+          return (this.fullscreenLoading = false);
         } else {
           if (res.data.list.length > 0) {
             if (this.ruleForm.type != "m721") {

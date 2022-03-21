@@ -31,7 +31,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="Claim" prop="withdraw">
+          <el-form-item :label="$t('account.claim')" prop="withdraw">
             <el-input v-model="ruleForm.withdraw">
               <div slot="suffix" class="max" @click="handleWithdrawMax">
                 Max
@@ -42,7 +42,7 @@
             class="submit-btn"
             @click="handleWithdraw"
             :loading="loading"
-            >Claim New</el-button
+            >{{ $t("account.claimNew") }}</el-button
           >
         </el-form>
       </div>
@@ -60,7 +60,7 @@ export default {
       if (value == "" || value == 0) {
         return callback(new Error("please enter Claim"));
       } else {
-        if (/^\d+$|^\d\.\d{0,6}$/.test(value)) {
+        if (/^\d+$|^\d+\.\d{0,6}$/.test(value)) {
           callback();
         } else {
           callback(new Error("Claim is not validate"));
@@ -114,6 +114,9 @@ export default {
   },
   created() {
     this.withdraw();
+    window.ethereum.on("chainChanged", (chainId) => {
+      window.location.reload();
+    });
   },
   methods: {
     async withdraw() {

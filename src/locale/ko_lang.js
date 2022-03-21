@@ -5,6 +5,7 @@ export default {
     myNfts: "나의 NFT",
     connectWallet: "지갑 연결하기",
     logout: "로그아웃",
+    account: "계정",
   },
   home: {
     title: "모두를 위한 간편한 NFT 서비스",
@@ -219,6 +220,9 @@ export default {
     website: "웹사이트",
     download: "다운로드",
     deploy: "자세히보기",
-    421: "23",
+  },
+  account: {
+    claim: "수량",
+    claimNew: "확인",
   },
 };
