@@ -68,6 +68,7 @@ export default {
         }
       }
     };
+
     return {
       loading: false,
       btnDisabled: true,
@@ -80,10 +81,11 @@ export default {
           { required: true, validator: withdrawRule, trigger: "blur" },
         ],
       },
+      chainId: null,
       currentCurrencyAccount: 0,
       currentCurrency: "USDT",
-      currentCurrencyAddress: "0x2b10a378fa4C6B3cb8df4EAb64Fb269CBA08E188",
-      currentCurrencyDecimal: 1e6,
+      currentCurrencyAddress: "",
+      currentCurrencyDecimal: null,
       currencyList: [
         {
           value: "USDT",
@@ -112,12 +114,59 @@ export default {
           decimal: 1e18,
         },
       },
+      symbolListObj: {
+        1: {
+          USDT: {
+            address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            decimal: 1e6,
+          },
+          USDC: {
+            address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            decimal: 1e6,
+          },
+          DAI: {
+            address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            decimal: 1e18,
+          },
+        },
+        56: {
+          USDT: {
+            address: "0x55d398326f99059fF775485246999027B3197955",
+            decimal: 1e18,
+          },
+          USDC: {
+            address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+            decimal: 1e18,
+          },
+          DAI: {
+            address: "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",
+            decimal: 1e18,
+          },
+        },
+        137: {
+          USDT: {
+            address: "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+            decimal: 1e6,
+          },
+          USDC: {
+            address: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+            decimal: 1e6,
+          },
+          DAI: {
+            address: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+            decimal: 1e18,
+          },
+        },
+      },
     };
   },
   created() {
     this.withdraw();
-    window.ethereum.on("chainChanged", (chainId) => {
+    window.ethereum.on("chainChanged", async (chainId) => {
       window.location.reload();
+      this.chainId = this.$store.state.chainId
+        ? this.$store.state.chainId
+        : await contracts.signer.getChainId();
     });
   },
   methods: {
@@ -125,19 +174,28 @@ export default {
       this.account = this.$store.state.account
         ? this.$store.state.account
         : await contracts.signer.getAddress();
+      this.chainId = this.$store.state.chainId
+        ? this.$store.state.chainId
+        : await contracts.signer.getChainId();
 
+      this.currentCurrencyAddress =
+        this.symbolListObj[this.chainId][this.currentCurrency].address;
+      this.currentCurrencyDecimal =
+        this.symbolListObj[this.chainId][this.currentCurrency].decimal;
       const max = await contracts.MintBoxPool.pools(
         this.currentCurrencyAddress,
         this.account
       );
+
       const resultMax = max.toString() / this.currentCurrencyDecimal;
-      console.log(resultMax);
+      console.log(
+        max.toString(),
+        this.currentCurrencyAddress,
+        this.currentCurrencyDecimal
+      );
       this.currentCurrencyAccount = resultMax;
     },
     handleWithdrawMax() {
-      // if (this.currentCurrencyAccount == 0) {
-      //   return this.$message.error("your account empty!");
-      // }
       this.$refs.ruleForm.clearValidate();
       this.ruleForm.withdraw = this.currentCurrencyAccount;
     },
@@ -182,8 +240,10 @@ export default {
   },
   watch: {
     currentCurrency(newValue) {
-      this.currentCurrencyAddress = this.Test_symbolList[newValue].address;
-      this.currentCurrencyDecimal = this.Test_symbolList[newValue].decimal;
+      this.currentCurrencyAddress =
+        this.symbolListObj[this.chainId][newValue].address;
+      this.currentCurrencyDecimal =
+        this.symbolListObj[this.chainId][newValue].decimal;
       this.ruleForm.withdraw = null;
       this.withdraw();
     },
