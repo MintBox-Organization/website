@@ -27,6 +27,7 @@
           :type="ruleForm.type"
           :previewImg.sync="previewImg"
           :previewName="previewName"
+          :mutipleTokens="mutipleTokens"
           @fileUpload="nftImgUpload"
           @setFileName="setFileName"
           @getFileName="getFileName"
@@ -1368,7 +1369,7 @@ export default {
     },
     submitForm(formName) {
       if (!(this.singleNftCid || this.mutipleTokens.length > 0)) {
-        this.$message.error("Please upload NFTs");
+        this.$message.error(this.$t("upload.tipsUpload"));
         return;
       }
       this.createBtnDisabled = true;

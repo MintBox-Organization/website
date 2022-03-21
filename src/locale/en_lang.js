@@ -114,6 +114,7 @@ export default {
       "Price cannot be 0",
     ],
     checkNetwork: "Please select the {network} network.",
+    tipsUpload: "Please upload NFTs",
   },
   explore: {
     exploreCollections: "Explore Collections",
@@ -272,5 +273,8 @@ export default {
   account: {
     claim: "Claim",
     claimNew: "Claim New",
+    accountTips: "Plese enter the amount within 8 decimal places.",
+    accountTip:
+      "The withdrawal amount cannot exceed the total balance of the account.",
   },
 };

@@ -110,6 +110,7 @@ export default {
       "가격은 0일 수 없습니다.",
     ],
     checkNetwork: "{network} 네트워크를 선택하십시오.",
+    tipsUpload: "NFT를 업로드하세요",
   },
   explore: {
     exploreCollections: "컬렉션 탐색하기",
@@ -224,5 +225,7 @@ export default {
   account: {
     claim: "수량",
     claimNew: "확인",
+    accountTips: "소수점 이하 8자리 이내에서 금액을 입력하세요.",
+    accountTip: "인출금액은 계좌의 총잔액을 초과할 수 없습니다.",
   },
 };

@@ -47,6 +47,7 @@
             list-type="picture-card"
             :auto-upload="false"
             multiple
+            :file-list="mutipleTokens"
             :on-change="multiplePreview"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
@@ -112,6 +113,7 @@ export default {
       type: String,
     },
     previewName: Object,
+    mutipleTokens: Array,
   },
   data() {
     let checkSpace = (rule, value, callback) => {
@@ -123,6 +125,7 @@ export default {
       }
     };
     return {
+      multipleFileList: [],
       isPreview: false,
       errorImg: require("@/assets/images/default.png"),
       fileList: [],
@@ -156,7 +159,8 @@ export default {
       }
       this.$emit("fileUpload", file);
     },
-    multiplePreview(file) {
+    multiplePreview(file, fileList) {
+      console.log(fileList);
       this.$emit("fileUpload", file);
     },
     handleRemove(file) {
@@ -201,6 +205,14 @@ export default {
     },
   },
   created() {},
+  watch: {
+    mutipleTokens(newValue) {
+      console.log(newValue);
+      newValue.forEach((item) => {
+        item["url"] = item.imgUrl;
+      });
+    },
+  },
 };
 </script>
 <style lang="less" scoped>

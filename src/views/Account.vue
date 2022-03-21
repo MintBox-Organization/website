@@ -58,12 +58,12 @@ export default {
   data() {
     const withdrawRule = (rule, value, callback) => {
       if (value == "" || value == 0) {
-        return callback(new Error("please enter Claim"));
+        return callback(new Error(this.$t("account.accountTips")));
       } else {
-        if (/^\d+$|^\d+\.\d{0,6}$/.test(value)) {
+        if (/^\d+$|^\d+\.\d{0,8}$/.test(value)) {
           callback();
         } else {
-          callback(new Error("Claim is not validate"));
+          callback(new Error(this.$t("account.accountTips")));
         }
       }
     };
@@ -133,15 +133,16 @@ export default {
       this.currentCurrencyAccount = resultMax;
     },
     handleWithdrawMax() {
-      if (this.currentCurrencyAccount == 0) {
-        return this.$message.error("your account empty!");
-      }
+      // if (this.currentCurrencyAccount == 0) {
+      //   return this.$message.error("your account empty!");
+      // }
+      this.$refs.ruleForm.clearValidate();
       this.ruleForm.withdraw = this.currentCurrencyAccount;
     },
     handleWithdraw() {
       this.$refs.ruleForm.validate((valida) => {
         if (this.ruleForm.withdraw > this.currentCurrencyAccount) {
-          return this.$message.error("you account no more!");
+          return this.$message.error(this.$t("account.accountTip"));
         }
         if (valida) {
           this.handleSendTransaction();
