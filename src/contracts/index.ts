@@ -65,37 +65,31 @@ class Contracts {
     }
 
     const mainChains = [1, 56, 137];
-    for (const chain of mainChains) {
-      this.DelegatePayMap.set(
-        chain,
-        "0x4C7de9e14eeF1aCDfaE61978b4E6Abe14396fe27"
-      );
-      this.MintBoxPoolMap.set(
-        chain,
-        "0x2bB6a92E46f1e626BeCb361D3efF3E6f10107718"
-      );
+    for (const c of mainChains) {
+      this.DelegatePayMap.set(c, "0x4C7de9e14eeF1aCDfaE61978b4E6Abe14396fe27");
+      this.MintBoxPoolMap.set(c, "0x2bB6a92E46f1e626BeCb361D3efF3E6f10107718");
       this.ERC721SingleCollectionUpgradeableImpMap.set(
-        chain,
+        c,
         "0x98416DE52409855C1071A419e4C826e454b52a8B"
       );
       this.ERC721MultiCollectionUpgradeableImpMap.set(
-        chain,
+        c,
         "0x5632723Aa7B235cEbdcE96fC9229cbd83bbC6bf9"
       );
       this.ERC1155SingleCollectionUpgradeableImpMap.set(
-        chain,
+        c,
         "0xBD7F9Ee5B47C302FF371e9F8b44e411a589f1d51"
       );
       this.ERC721SingleCollectionFactoryAddressMap.set(
-        chain,
+        c,
         "0xeeF35D19f60bb79807f27DD06d6A3fa2925FBeE2"
       );
       this.ERC721MultipleCollectionFactoryAddressMap.set(
-        chain,
+        c,
         "0xe0Fb944135B4c08B34516eC71b0752A6986f2924"
       );
       this.ERC1155SingleCollectionFactoryAddressMap.set(
-        chain,
+        c,
         "0x758B0bDb994cEd9b5caB4256b8Dedf0B0A715E4f"
       );
     }
