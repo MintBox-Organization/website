@@ -13,7 +13,7 @@ import {
 
 class Contracts {
   public readonly delegatePay = "0x4C7de9e14eeF1aCDfaE61978b4E6Abe14396fe27";
-  public readonly mintBoxPool = "0x6A3AE0BdC0c1C73dD51059448371570a1A553C8f";
+  public readonly mintBoxPool = "0xc41E90AcA4dA792Dc25af7Ff0A46433D4Ef93F66";
   public readonly ERC721SingleCollectionUpgradeableImpMap = new Map();
   public readonly ERC721MultiCollectionUpgradeableImpMap = new Map();
   public readonly ERC1155SingleCollectionUpgradeableImpMap = new Map();
@@ -30,27 +30,27 @@ class Contracts {
   constructor() {
     this.ERC721SingleCollectionUpgradeableImpMap.set(
       4,
-      "0xf9342B89eCDdeB18E9c9F1bdC81Bf21Fb9A5b050"
+      "0xA474F16c47164593E14156Cc3bE651B7417daAc2"
     );
     this.ERC721MultiCollectionUpgradeableImpMap.set(
       4,
-      "0xff09034b22087ecDe43Fa1E51d9673743346b5f9"
+      "0xdDBe0dDfcedB794a9C90F65256eb871Fb8f9B733"
     );
     this.ERC1155SingleCollectionUpgradeableImpMap.set(
       4,
-      "0xa8C877b32fcB8b9fa4Eb42e8A1C807AE299e375F"
+      "0xd1f0C3C9D3648392348C38983B4b75b10aC8C0aF"
     );
     this.ERC721SingleCollectionFactoryAddressMap.set(
       4,
-      "0xb5e5E44FeB12a516D2DBDBAaE014c0AC91064504"
+      "0x00AcAd4233B81AaAd48ca3d738d5F1E9A37ac659"
     );
     this.ERC721MultipleCollectionFactoryAddressMap.set(
       4,
-      "0xC3E536F66c6B34476D0ECeb9321B0838A5CC10C7"
+      "0x6e942DD36Ca312Faf82Cf39D82bf6F079e4d15D4"
     );
     this.ERC1155SingleCollectionFactoryAddressMap.set(
       4,
-      "xd267F5bDFA15A1Cb900CCDE140d5690C98121899"
+      "0x758B0bDb994cEd9b5caB4256b8Dedf0B0A715E4f"
     );
     this.ERC721SingleCollectionUpgradeableImpMap.set(
       97,

@@ -50,13 +50,13 @@
                 <!-- <el-dropdown-item divided command="account">
             <i class="el-icon-user"></i> Account</el-dropdown-item
           > -->
+                <el-dropdown-item command="account">
+                  <i class="el-icon-download rotate-right"></i>
+                  Account</el-dropdown-item
+                >
                 <el-dropdown-item command="logout">
                   <i class="el-icon-download rotate-right"></i>
                   {{ $t("nav.logout") }}</el-dropdown-item
-                >
-                <el-dropdown-item command="account">
-                  <i class="el-icon-download rotate-right"></i>
-                  account</el-dropdown-item
                 >
               </el-dropdown-menu>
             </el-dropdown>

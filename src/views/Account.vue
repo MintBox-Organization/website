@@ -1,5 +1,5 @@
 <template>
-  <div class="account-container">
+  <div class="account-container" v-loading="loading">
     <div class="account-dialog">
       <div class="account-dialog-content">
         <el-form
@@ -10,30 +10,40 @@
           class="demo-ruleForm"
         >
           <el-form-item label="My Account">
+            <el-input
+              class="account-value"
+              v-model="currentCurrencyAccount"
+              disabled
+            ></el-input>
             <el-select
               v-model="currentCurrency"
-              placeholder=""
               class="account-input"
               :popper-append-to-body="false"
             >
-              <div slot="prefix">UDSP</div>
               <el-option
                 v-for="item in currencyList"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               >
-                <span>{{ item.value }}</span>
+                <!-- <span>{{ item.value }}</span> -->
                 <span>{{ item.label }}</span>
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="Claim" prop="withDraw">
-            <el-input v-model="ruleForm.withDraw">
-              <div slot="suffix" class="max">Max</div>
+          <el-form-item label="Claim" prop="withdraw">
+            <el-input v-model="ruleForm.withdraw">
+              <div slot="suffix" class="max" @click="handleWithdrawMax">
+                Max
+              </div>
             </el-input>
           </el-form-item>
-          <div class="submit-btn">Claim New</div>
+          <el-button
+            class="submit-btn"
+            @click="handleWithdraw"
+            :loading="loading"
+            >Claim New</el-button
+          >
         </el-form>
       </div>
     </div>
@@ -42,39 +52,134 @@
 
 <script>
 import contracts from "@/contracts";
+import { BigNumber } from "@ethersproject/bignumber";
+import { Wallet } from "@ethersproject/wallet";
 export default {
   data() {
+    const withdrawRule = (rule, value, callback) => {
+      if (value == "" || value == 0) {
+        return callback(new Error("please enter Claim"));
+      } else {
+        if (/^\d+$|^\d\.\d{0,6}$/.test(value)) {
+          callback();
+        } else {
+          callback(new Error("Claim is not validate"));
+        }
+      }
+    };
     return {
+      loading: false,
+      account: "",
       ruleForm: {
-        withDraw: "",
+        withdraw: "",
       },
       rules: {
-        withDraw: [
-          { required: true, message: "please enter Claim", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
+        withdraw: [
+          { required: true, validator: withdrawRule, trigger: "blur" },
         ],
       },
-      currentCurrency: "",
+      currentCurrencyAccount: 0,
+      currentCurrency: "USDT",
+      currentCurrencyAddress: "0x2b10a378fa4C6B3cb8df4EAb64Fb269CBA08E188",
+      currentCurrencyDecimal: 1e6,
       currencyList: [
         {
-          value: 1,
-          label: "UDSP",
+          value: "USDT",
+          label: "USDT",
         },
         {
-          value: 2,
-          label: "SKX",
+          value: "USDC",
+          label: "USDC",
         },
         {
-          value: 3,
-          label: "WED",
+          value: "DAI",
+          label: "DAI",
         },
       ],
+      Test_symbolList: {
+        USDT: {
+          address: "0x2b10a378fa4C6B3cb8df4EAb64Fb269CBA08E188",
+          decimal: 1e6,
+        },
+        USDC: {
+          address: "0x3858561E92C4F44fa2e4fBC3Ef57ac02Bc2754eF",
+          decimal: 1e6,
+        },
+        DAI: {
+          address: "0x2d2C8ab3A4006823260F862FF042b8cFDBcCE0C7",
+          decimal: 1e18,
+        },
+      },
     };
   },
+  created() {
+    this.withdraw();
+  },
   methods: {
-    withdraw() {
-      // const balance = await contracts.ERC20(USDTAddress).balanceOf(walletAddress)
-      // contracts.MintBoxPool.interface.encodeFunctionData('withdraw',[USDTAddress, walletAddress, ])
+    async withdraw() {
+      this.account = this.$store.state.account
+        ? this.$store.state.account
+        : await contracts.signer.getAddress();
+
+      const max = await contracts.MintBoxPool.pools(
+        this.currentCurrencyAddress,
+        this.account
+      );
+      const resultMax = max.toString() / this.currentCurrencyDecimal;
+      console.log(resultMax);
+      this.currentCurrencyAccount = resultMax;
+    },
+    handleWithdrawMax() {
+      if (this.currentCurrencyAccount == 0) {
+        return this.$message.error("your account empty!");
+      }
+      this.ruleForm.withdraw = this.currentCurrencyAccount;
+    },
+    handleWithdraw() {
+      this.$refs.ruleForm.validate((valida) => {
+        if (this.ruleForm.withdraw > this.currentCurrencyAccount) {
+          return this.$message.error("you account no more!");
+        }
+        if (valida) {
+          this.handleSendTransaction();
+        }
+      });
+    },
+    async handleSendTransaction() {
+      const data = contracts.MintBoxPool.interface.encodeFunctionData(
+        "withdraw",
+        [
+          this.currentCurrencyAddress,
+          this.account,
+          BigNumber.from(
+            (this.ruleForm.withdraw * this.currentCurrencyDecimal).toString()
+          ),
+        ]
+      );
+      this.loading = true;
+      try {
+        const tx = await contracts.signer.sendTransaction({
+          from: this.account,
+          to: contracts.mintBoxPool,
+          data,
+        });
+        const receipt = await tx.wait();
+        this.ruleForm.withdraw = null;
+        this.withdraw();
+        this.$message.success("trade successfully");
+      } catch (e) {
+        console.log("e", e);
+      } finally {
+        this.loading = false;
+      }
+    },
+  },
+  watch: {
+    currentCurrency(newValue) {
+      this.currentCurrencyAddress = this.Test_symbolList[newValue].address;
+      this.currentCurrencyDecimal = this.Test_symbolList[newValue].decimal;
+      this.ruleForm.withdraw = null;
+      this.withdraw();
     },
   },
 };
@@ -83,11 +188,6 @@ export default {
 <style lang="less" scoped>
 /deep/ .el-input__inner {
   width: 360px;
-}
-
-/deep/ .el-select-dropdown__item {
-  display: flex;
-  justify-content: space-between;
 }
 .account-container {
   width: 100%;
@@ -113,16 +213,22 @@ export default {
     /deep/ .el-form-item__label {
       font-weight: bold;
     }
+    .account-value.el-input {
+      width: 260px;
+    }
+    .account-value/deep/.el-input__inner {
+      width: 260px;
+    }
   }
-  .account-input /deep/ .el-input__prefix {
-    left: 80%;
+  .el-select /deep/ .el-input {
+    display: inline-block;
+    width: 100px;
   }
-  .el-input--prefix .el-input__inner {
-    padding-left: 0;
+  .el-select /deep/ .el-input .el-input__inner {
+    display: inline-block;
+    width: 100px;
   }
-  /deep/ .el-input__suffix {
-    right: 10px;
-  }
+
   .max {
     color: #3a88ee;
     cursor: pointer;
