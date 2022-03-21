@@ -734,6 +734,7 @@ export default {
             // } else {
             // }
           } else {
+            this.$message.error(this.$t(`upload.${res.message}`));
             this.createBtnDisabled = false;
           }
         });
