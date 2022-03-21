@@ -273,7 +273,7 @@ export default {
   account: {
     claim: "Claim",
     claimNew: "Claim New",
-    accountTips: "Plese enter the amount within 8 decimal places.",
+    accountTips: "Plese enter the amount within 6 decimal places.",
     accountTip:
       "The withdrawal amount cannot exceed the total balance of the account.",
   },

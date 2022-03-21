@@ -225,7 +225,7 @@ export default {
   account: {
     claim: "수량",
     claimNew: "확인",
-    accountTips: "소수점 이하 8자리 이내에서 금액을 입력하세요.",
+    accountTips: "소수점 이하 6자리 이내에서 금액을 입력하세요.",
     accountTip: "인출금액은 계좌의 총잔액을 초과할 수 없습니다.",
   },
 };

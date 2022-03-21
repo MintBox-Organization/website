@@ -61,7 +61,7 @@ export default {
       if (value == "" || value == 0) {
         return callback(new Error(this.$t("account.accountTips")));
       } else {
-        if (/^\d+$|^\d+\.\d{0,8}$/.test(value)) {
+        if (/^\d+$|^\d+\.\d{0,6}$/.test(value)) {
           callback();
         } else {
           callback(new Error(this.$t("account.accountTips")));
