@@ -29,6 +29,12 @@
           >
             {{ $t("nav.myNfts") }}</el-menu-item
           >
+          <el-menu-item
+            index="/docs"
+            :class="activePath == '/docs' ? 'active' : ''"
+          >
+            {{ $t("nav.docs") }}</el-menu-item
+          >
         </el-menu>
         <div class="login-info">
           <div v-if="!isLogin" class="connect-wallet" @click="getConnect">
@@ -262,6 +268,9 @@ export default {
           break;
         case "myNfts":
           this.$router.push("/mynfts");
+          break;
+        case "docs":
+          this.$router.push("/docs");
           break;
         default:
           break;

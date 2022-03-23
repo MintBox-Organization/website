@@ -6,6 +6,7 @@ export default {
     connectWallet: "지갑 연결하기",
     logout: "로그아웃",
     account: "계정",
+    docs: "사용매뉴얼",
   },
   home: {
     title: "모두를 위한 간편한 NFT 서비스",

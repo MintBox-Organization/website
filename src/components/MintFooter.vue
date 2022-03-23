@@ -2,15 +2,18 @@
   <div id="mintFooter" class="container">
     <img class="logo" src="@/assets/images/logo.png" alt="" />
     <div class="contact-box">
-      <span class="copy-right"> @ 2021 MINTBOX </span>
       <div>
         <span>
-          <el-button type="text" @click="terms">Terms & Condition</el-button>
+          <el-button type="text" @click="docs"> Docs</el-button>
         </span>
         <span>
           <el-button type="text" @click="contact"> Contact</el-button>
         </span>
+        <span>
+          <el-button type="text" @click="terms">Terms & Condition</el-button>
+        </span>
       </div>
+      <span class="copy-right"> @ 2021 MINTBOX </span>
     </div>
   </div>
 </template>
@@ -27,6 +30,9 @@ export default {
     },
     contact() {
       window.location = "mailto:contact@mintbox.vip";
+    },
+    docs() {
+      this.$router.push("/docs");
     },
   },
 };

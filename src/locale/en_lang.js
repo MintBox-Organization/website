@@ -6,6 +6,7 @@ export default {
     connectWallet: "Connect Wallet",
     logout: "Logout",
     account: "Account",
+    docs: "DOCS",
   },
   home: {
     title: `NFTS
