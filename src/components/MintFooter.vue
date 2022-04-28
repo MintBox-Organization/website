@@ -4,7 +4,13 @@
     <div class="contact-box">
       <div>
         <span>
-          <el-button type="text" @click="docs"> Docs</el-button>
+          <!-- <el-button type="text" @click="docs"> Docs</el-button> -->
+          <a
+            class="docs-download"
+            href="/static/pdf/Mintbox.pdf"
+            target="__blank"
+            >Docs</a
+          >
         </span>
         <span>
           <el-button type="text" @click="contact"> Contact</el-button>
@@ -13,7 +19,7 @@
           <el-button type="text" @click="terms">Terms & Condition</el-button>
         </span>
       </div>
-      <span class="copy-right"> @ 2021 MINTBOX </span>
+      <span class="copy-right"> @ 2022 MINTBOX </span>
     </div>
   </div>
 </template>
@@ -50,13 +56,18 @@ export default {
     span {
       font-size: 10px;
       margin-left: 16px;
-      font-weight: 500;
+      font-weight: 600;
       line-height: 15px;
       cursor: pointer;
-      .el-button--text {
+      .el-button--text,
+      a {
         color: #8e8798;
         font-size: 10px;
         line-height: 15px;
+        font-weight: 600;
+      }
+      a:hover {
+        color: #66b1ff;
       }
       .el-button--text:hover {
         color: #66b1ff;

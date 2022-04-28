@@ -76,12 +76,13 @@
           </div>
         </div>
         <el-row class="plate4">
-          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12"
+          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"
             ><h2 class="plate4-title">
-              {{ $t("home.useMintBox") }}
+              <p>{{ $t("home.useMintBoxTitle") }}</p>
+              <p>{{ $t("home.useMintBox") }}</p>
             </h2></el-col
           >
-          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12"
+          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"
             ><img
               class="plate4-img"
               src="@/assets/images/home/process.gif"
@@ -116,6 +117,7 @@ export default {
         require("@/assets/images/home/main_3.png"),
         require("@/assets/images/home/main_4.png"),
       ],
+      timer: null,
     };
   },
   computed: {
@@ -136,11 +138,23 @@ export default {
       ];
     },
   },
+  mounted() {
+    let i = 0;
+    this.timer = setInterval(() => {
+      i++;
+      if (i > 4) return (i = 0);
+      this.activeIndex = i + "";
+      this.autoChooseItem(i);
+    }, 3000);
+  },
   methods: {
     handleToCreate() {
       this.$router.push(`/create`);
     },
     handleChooseItem(item, index) {
+      this.currentBgImg = this.mainItem[item - 1];
+    },
+    autoChooseItem(item) {
       this.currentBgImg = this.mainItem[item - 1];
     },
   },
@@ -294,13 +308,17 @@ export default {
     .plate4 {
       padding: 60px 0;
       .plate4-title {
-        width: 209px;
         height: 105px;
+        margin: 0 auto 20px;
+        text-align: center;
         font-size: 24px;
         font-weight: 900;
         color: #564e65;
         line-height: 35px;
         word-break: keep-all;
+        > p {
+          margin: 0;
+        }
       }
       .plate4-img {
         width: 100%;

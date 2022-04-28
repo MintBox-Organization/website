@@ -12,7 +12,7 @@ import { i18n } from "./locale/i18n";
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI, { locale });
-
+document.title = "MintBox";
 new Vue({
   router,
   store,

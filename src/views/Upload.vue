@@ -1430,6 +1430,16 @@ export default {
     this.bucketLogin();
     this.setFormToken();
     this.listen();
+
+    if (this.$route.query.type == "721") {
+      document.title = "MintBox-create single NFT(ERC721)";
+    } else if (this.$route.query.type == "m721") {
+      document.title = "MintBox-create multiple NFTs（ERC 721）";
+    } else if (this.$route.query.type == "1155") {
+      document.title = "MintBox-create single NFT(ERC 1155)";
+    } else {
+      document.title = "MintBox-create";
+    }
   },
 };
 </script>

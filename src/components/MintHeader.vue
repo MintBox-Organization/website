@@ -29,12 +29,14 @@
           >
             {{ $t("nav.myNfts") }}</el-menu-item
           >
-          <el-menu-item
-            index="/docs"
-            :class="activePath == '/docs' ? 'active' : ''"
-          >
-            {{ $t("nav.docs") }}</el-menu-item
-          >
+          <el-menu-item>
+            <a
+              class="docs-download"
+              href="/static/pdf/Mintbox.pdf"
+              target="__blank"
+              >{{ $t("nav.docs") }}</a
+            >
+          </el-menu-item>
         </el-menu>
         <div class="login-info">
           <div v-if="!isLogin" class="connect-wallet" @click="getConnect">
@@ -382,5 +384,9 @@ export default {
 }
 .icon {
   font-size: 18px;
+}
+.docs-download {
+  display: block;
+  height: 100%;
 }
 </style>
