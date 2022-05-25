@@ -394,7 +394,7 @@ export default {
     let checkChainId = (rule, value, callback) => {
       const chainId = this.$store.state.chainId;
       if (value != chainId) {
-        const network = formatNetwork(value);
+        const network = formatNetwork(chainId);
         return callback(new Error(this.$t("upload.checkNetwork", { network })));
       } else {
         callback();
@@ -938,14 +938,21 @@ export default {
       this.ruleForm.mintStartAt = startTime;
       this.ruleForm.mintEndAt = endTime;
     },
-    blockChainChange(val) {
+    async blockChainChange(val) {
+      console.log(val, "chain");
       if (process.env.NODE_ENV === "production") {
         this.symbolList = symbolListObj[val];
       }
       const chainId = this.$store.state.chainId;
+      console.log(chainId, "chainId");
       if (val != chainId) {
-        const network = formatNetwork(val);
+        const network = formatNetwork(chainId);
         this.$message.error(this.$t("upload.checkNetwork", { network }));
+        val = "0x" + val.toString(16);
+        window.web3.currentProvider.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: val }],
+        });
       }
       this.$refs["ruleForm"].validateField("blockChain");
     },
@@ -1441,6 +1448,22 @@ export default {
       document.title = "MintBox-create";
     }
   },
+  // watch: {
+  //   "$store.state.chainId"(value) {
+  //     if (!value) return;
+  //     if (process.env.NODE_ENV === "development") {
+  //       let has = [4, 97, 80001].includes(value);
+  //       if (!has){
+  //         this.$message.error("you cant choose no provider chain")
+  //       }
+
+  //       this.ruleForm.blockChain = Number(value);
+  //       this.$refs["ruleForm"].validateField("blockChain");
+  //     } else {
+  //       console.log(1);
+  //     }
+  //   },
+  // },
 };
 </script>
 <style lang="less" scoped>
