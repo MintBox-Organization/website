@@ -938,7 +938,7 @@ export default {
       this.ruleForm.mintStartAt = startTime;
       this.ruleForm.mintEndAt = endTime;
     },
-    async blockChainChange(val) {
+    blockChainChange(val) {
       console.log(val, "chain");
       if (process.env.NODE_ENV === "production") {
         this.symbolList = symbolListObj[val];
