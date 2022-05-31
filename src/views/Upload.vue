@@ -155,8 +155,22 @@
         :label="$t('upload.createCollectionLable')"
         prop="collection"
       >
-        <div class="create-btn" @click="showCreateCollection">
+        <div
+          class="create-btn"
+          @click="showCreateCollection"
+          v-if="!contractURI"
+        >
           <img src="@/assets/images/add.png" alt="" />
+          <div class="text">{{ $t("upload.createCollectionName") }}</div>
+          <div class="type">
+            ERC-{{ ruleForm.type == "1155" ? "1155" : "721" }}
+          </div>
+        </div>
+
+        <div class="create-btn" @click="showCreateCollection" v-else>
+          <div class="checked-success">
+            <i class="el-icon-circle-check"></i>
+          </div>
           <div class="text">{{ $t("upload.createCollectionName") }}</div>
           <div class="type">
             ERC-{{ ruleForm.type == "1155" ? "1155" : "721" }}
@@ -988,6 +1002,7 @@ export default {
         if (valid) {
           this.setCollectionMetaData();
           this.ruleForm.collection = this.collectionForm;
+          console.log(this.ruleForm.collection, "------");
           this.$refs["ruleForm"].validateField("collection");
           this.collectionShow = false;
         } else {
@@ -1546,6 +1561,11 @@ export default {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    .checked-success {
+      font-size: 44px;
+      color: #67c23a;
+      margin-bottom: 20px;
+    }
     img {
       width: 40px;
       height: 40px;
